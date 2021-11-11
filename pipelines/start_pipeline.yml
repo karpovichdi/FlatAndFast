@@ -1,0 +1,39 @@
+name: $(Date:yyyyMMdd)$(Rev:r)
+variables:
+- group: android
+trigger:
+- master
+jobs:
+  - job: Android
+    pool:
+      vmImage: 'macOS-latest'
+    steps:
+    - task: FlutterInstall@0
+      inputs:
+        channel: 'stable'
+        version: 'latest'
+
+    - task: FlutterBuild@0
+      inputs:
+        target: 'all'
+        projectDirectory: $(projectDirectory)
+        iosCodesign: false
+
+    - task: AndroidSigning@3
+      displayName: 'APK Signing'
+      inputs:
+        apkFiles: '$(outputBuildDirectory)/$(fileName)'
+        apksign: true
+        apksignerKeystoreFile: upload-keystore.jks
+        apksignerKeystorePassword: $(keypassword)
+        apksignerKeystoreAlias: $(key)
+        apksignerKeyPassword: $(keypassword)
+
+    - task: CopyFiles@2
+      inputs:
+        contents: '$(outputBuildDirectory)/$(fileName)'
+        targetFolder: '$(build.artifactStagingDirectory)'
+    
+    - task: PublishBuildArtifacts@1
+      inputs:
+        artifactName: dropedArtifacts
