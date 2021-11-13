@@ -13,6 +13,18 @@ jobs:
         channel: 'stable'
         version: 'latest'
 
+    - task: CmdLine@2
+      displayName: 'Flutter get'
+      inputs:
+        script: '$(FlutterToolPath)/flutter pub get'
+        workingDirectory: $(projectDirectory)
+
+    - task: CmdLine@2
+      displayName: 'Flutter gen'
+      inputs:
+        script: '$(FlutterToolPath)/flutter pub run build_runner build --delete-conflicting-outputs'
+        workingDirectory: $(projectDirectory)
+
     - task: FlutterBuild@0
       inputs:
         target: 'all'
