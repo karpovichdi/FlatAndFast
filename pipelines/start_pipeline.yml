@@ -13,6 +13,14 @@ jobs:
         channel: 'stable'
         version: 'latest'
 
+    - task: CmdLine@2
+      inputs:
+        script: 'flutter pub get'
+
+    - task: CmdLine@2
+      inputs:
+        script: 'flutter pub run build_runner build --delete-conflicting-outputs'
+
     - task: FlutterBuild@0
       inputs:
         target: 'all'
