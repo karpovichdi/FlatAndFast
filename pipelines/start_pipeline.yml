@@ -14,12 +14,16 @@ jobs:
         version: 'latest'
 
     - task: CmdLine@2
+      displayName: 'Flutter get'
       inputs:
-        script: 'flutter pub get'
+        script: '$(FlutterToolPath)/flutter pub get'
+        workingDirectory: $(projectDirectory)
 
     - task: CmdLine@2
+      displayName: 'Flutter gen'
       inputs:
-        script: 'flutter pub run build_runner build --delete-conflicting-outputs'
+        script: '$(FlutterToolPath)/flutter pub run build_runner build --delete-conflicting-outputs'
+        workingDirectory: $(projectDirectory)
 
     - task: FlutterBuild@0
       inputs:
