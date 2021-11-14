@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flat_and_fast/pages/carousels_screen.dart';
 import 'package:flat_and_fast/pages/gradients_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -42,18 +43,26 @@ class MainMenuPage extends StatelessWidget {
                   },
                   child: const Text('Gradients')),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.fromLTRB(8,0,8,0),
-            //   child: ElevatedButton(onPressed: gradientsButtonClicked(context: context), child: const Text('Some feature')),
-            // ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+              child: ElevatedButton(
+                  onPressed: () {
+                    carouselsButtonClicked(context: context);
+                  },
+                  child: const Text('Carousels')),
+            ),
           ],
         ),
       ),
     );
   }
 
-  gradientsButtonClicked({required BuildContext context}) async {
+  gradientsButtonClicked({required BuildContext context}) {
     _navigateToWidget(widget: const GradientScreen(), context: context);
+  }
+
+  carouselsButtonClicked({required BuildContext context}) {
+    _navigateToWidget(widget: const CarouselScreen(), context: context);
   }
 
   Future _navigateToWidget(

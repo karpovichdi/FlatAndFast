@@ -7,31 +7,30 @@ class GradientScreen extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.grey.shade400,
-        body: ListView(
-          children: const [
-            Padding(
-              padding: EdgeInsets.fromLTRB(0,0,0,8),
-              child: Center(
-                child: Text('LinearGradient',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w300,
-                  color: Colors.black
-                ),),
-              ),
+    return Scaffold(
+      appBar: AppBar(title: const Text('GradientsScreen')),
+      backgroundColor: Colors.amberAccent.shade200,
+      body: ListView(
+        children: const [
+          Padding(
+            padding: EdgeInsets.fromLTRB(0,8,0,8),
+            child: Center(
+              child: Text('LinearGradient',
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.w300,
+                color: Colors.black
+              ),),
             ),
-            Center(
-              child: Pokeball(
-                  backgroundColor: Colors.white,
-                  shadowColor: Colors.grey,
-                  gradientColors: [Colors.grey, Colors.orangeAccent],
-                  gradientStops: [0.12, 0.86]),
-            )
-          ]
-        ),
+          ),
+          Center(
+            child: Pokeball(
+                backgroundColor: Colors.white,
+                shadowColor: Colors.redAccent,
+                gradientColors: [Colors.redAccent, Colors.orangeAccent],
+                gradientStops: [0.12, 0.86]),
+          )
+        ]
       ),
     );
   }
