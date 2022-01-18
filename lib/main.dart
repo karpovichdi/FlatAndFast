@@ -1,75 +1,26 @@
 import 'dart:async';
 
-import 'package:flat_and_fast/pages/carousels_screen.dart';
-import 'package:flat_and_fast/pages/gradients_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:redux/redux.dart';
+import 'package:redux_logging/redux_logging.dart';
+import 'package:redux_thunk/redux_thunk.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+import 'common/redux/app/app_reducer.dart';
+import 'common/redux/app/app_state.dart';
+import 'di.dart';
+import 'flat_app.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await configureDependencies();
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Main Menu',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MainMenuPage(),
-    );
-  }
-}
-
-class MainMenuPage extends StatelessWidget {
-  const MainMenuPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Main Menu'),
-      ),
-      body: Center(
-        child: ListView(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-              child: ElevatedButton(
-                  onPressed: () {
-                    gradientsButtonClicked(context: context);
-                  },
-                  child: const Text('Gradients')),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-              child: ElevatedButton(
-                  onPressed: () {
-                    carouselsButtonClicked(context: context);
-                  },
-                  child: const Text('Carousels')),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  gradientsButtonClicked({required BuildContext context}) {
-    _navigateToWidget(widget: const GradientScreen(), context: context);
-  }
-
-  carouselsButtonClicked({required BuildContext context}) {
-    _navigateToWidget(widget: const CarouselScreen(), context: context);
-  }
-
-  Future _navigateToWidget(
-      {required Widget widget, required BuildContext context}) async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => widget),
-    );
-  }
+  final store = Store<AppState>(
+    appReducer,
+    initialState: AppState.initial(),
+    middleware: [
+      thunkMiddleware,
+      LoggingMiddleware<AppState>.printer(),
+    ],
+  );
+  runApp(FlatApp(null, store));
 }

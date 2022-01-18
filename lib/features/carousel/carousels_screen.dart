@@ -1,5 +1,4 @@
-import 'package:flat_and_fast/views/carousel.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flat_and_fast/common/controlls/carousel.dart';
 import 'package:flutter/material.dart';
 
 class CarouselScreen extends StatelessWidget {
@@ -11,6 +10,7 @@ class CarouselScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('CarouselScreen'),
       ),
-        body: const Carousel());
+      body: const Carousel(),
+    );
   }
 }

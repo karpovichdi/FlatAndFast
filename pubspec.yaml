@@ -15,6 +15,19 @@ dependencies:
   cupertino_icons:
   flutter_svg: ^0.22.0
 
+  redux: ^5.0.0
+  flutter_redux: ^0.8.2
+  redux_thunk: ^0.4.0
+  redux_logging: ^0.5.0
+
+  logger: ^1.1.0
+
+  dio: ^4.0.1
+  retrofit: ^2.0.1
+
+  injectable: ^1.5.0
+  get_it: ^7.2.0
+
   built_value:
   built_collection:
   flutter_gen:
@@ -29,6 +42,9 @@ dev_dependencies:
   built_value_generator:
   flutter_gen_runner:
 
+  retrofit_generator: ^2.0.1
+  injectable_generator: ^1.5.0
+
 flutter_gen:
   line_length: 150
 
@@ -42,3 +58,12 @@ flutter:
   assets:
     - assets/images/
     - assets/images/poketball_bottom_part.svg
+
+  fonts:
+    - family: SF Pro Display
+      fonts:
+        - asset: assets/fonts/SF-Pro-Display-Regular.otf
+        - asset: assets/fonts/SF-Pro-Display-Medium.otf
+          weight: 500
+        - asset: assets/fonts/SF-Pro-Display-Bold.otf
+          weight: 600
