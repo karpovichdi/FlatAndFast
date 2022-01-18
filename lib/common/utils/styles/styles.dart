@@ -27,4 +27,11 @@ abstract class TextStyles {
     color: AppColors.button1Text,
     fontSize: 17.0,
   );
+
+  static const appBarTitle = TextStyle(
+    fontFamily: FontFamily.sFProDisplay,
+    fontWeight: FontWeight.w500,
+    color: AppColors.dustyGray,
+    fontSize: 18.0,
+  );
 }

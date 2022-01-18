@@ -3,7 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
 import 'common/redux/app/app_state.dart';
-import 'common/redux/app/navigation_key.dart';
+import 'common/navigation/navigation_key.dart';
 import 'common/utils/styles/app_colors.dart';
 import 'common/utils/styles/styles.dart';
 import 'features/home/home_screen.dart';

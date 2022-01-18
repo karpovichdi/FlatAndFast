@@ -1,3 +1,7 @@
+import 'package:flat_and_fast/common/controls/buttons/feature_button.dart';
+import 'package:flat_and_fast/common/navigation/navigation_helper.dart';
+import 'package:flat_and_fast/common/utils/styles/styles.dart';
+import 'package:flat_and_fast/features/camera/camera_screen.dart';
 import 'package:flat_and_fast/features/carousel/carousels_screen.dart';
 import 'package:flat_and_fast/features/gradients/gradients_screen.dart';
 import 'package:flutter/material.dart';
@@ -9,46 +13,29 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Main Menu'),
+        title: const Text(
+          'Flat and Fast',
+          style: TextStyles.appBarTitle,
+        ),
       ),
       body: Center(
         child: ListView(
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                  onPressed: () {
-                    gradientsButtonClicked(context: context);
-                  },
-                  child: const Text('Gradients')),
+            FeatureButton(
+              action: () => NavigationHelper.goToWidget(widget: const GradientScreen(), context: context),
+              title: 'Gradients',
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                  onPressed: () {
-                    carouselsButtonClicked(context: context);
-                  },
-                  child: const Text('Carousels')),
+            FeatureButton(
+              action: () => NavigationHelper.goToWidget(widget: const CarouselScreen(), context: context),
+              title: 'Carousels',
+            ),
+            FeatureButton(
+              action: () => NavigationHelper.goToWidget(widget: const CameraScreen(), context: context),
+              title: 'Photo / Video',
             ),
           ],
         ),
       ),
-    );
-  }
-
-  gradientsButtonClicked({required BuildContext context}) {
-    _navigateToWidget(widget: const GradientScreen(), context: context);
-  }
-
-  carouselsButtonClicked({required BuildContext context}) {
-    _navigateToWidget(widget: const CarouselScreen(), context: context);
-  }
-
-  Future _navigateToWidget(
-      {required Widget widget, required BuildContext context}) async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => widget),
     );
   }
 }

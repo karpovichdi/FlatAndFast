@@ -1,4 +1,5 @@
-import 'package:flat_and_fast/common/controlls/carousel.dart';
+import 'package:flat_and_fast/common/controls/carousel.dart';
+import 'package:flat_and_fast/common/utils/styles/styles.dart';
 import 'package:flutter/material.dart';
 
 class CarouselScreen extends StatelessWidget {
@@ -8,7 +9,7 @@ class CarouselScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('CarouselScreen'),
+        title: const Text('CarouselScreen', style: TextStyles.appBarTitle,),
       ),
       body: const Carousel(),
     );
