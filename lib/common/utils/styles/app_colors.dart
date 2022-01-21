@@ -14,4 +14,5 @@ abstract class AppColors {
   static const mineShaft = Color(0xFF313131);
   static const redAccent = Colors.redAccent;
   static const orangeAccent = Colors.orangeAccent;
+  static const black = Colors.black;
 }

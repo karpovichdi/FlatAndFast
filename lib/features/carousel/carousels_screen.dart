@@ -9,7 +9,7 @@ class CarouselScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('CarouselScreen', style: TextStyles.appBarTitle,),
+        title: const Text('Carousel', style: TextStyles.appBarTitle,),
       ),
       body: const Carousel(),
     );

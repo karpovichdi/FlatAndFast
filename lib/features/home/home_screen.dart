@@ -23,11 +23,11 @@ class HomeScreen extends StatelessWidget {
           children: <Widget>[
             FeatureButton(
               action: () => NavigationHelper.goToWidget(widget: const GradientScreen(), context: context),
-              title: 'Gradients',
+              title: 'Controls',
             ),
             FeatureButton(
               action: () => NavigationHelper.goToWidget(widget: const CarouselScreen(), context: context),
-              title: 'Carousels',
+              title: 'Carousel',
             ),
             FeatureButton(
               action: () => NavigationHelper.goToWidget(widget: const CameraScreen(), context: context),
