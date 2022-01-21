@@ -11,6 +11,7 @@ class CameraViewModel {
     required this.pickVideo,
     required this.isLoading,
     required this.loadStorageImage,
+    required this.cropImage,
     required this.playVideo,
     required this.playPortraitVideo,
     required this.imagePath,
@@ -32,6 +33,8 @@ class CameraViewModel {
 
   final Function(Log) loadStorageImage;
 
+  final Function() cropImage;
+
   final Function() playVideo;
 
   final Function() playPortraitVideo;
@@ -44,6 +47,7 @@ class CameraViewModel {
       fileVideoPath: store.state.uiState.cameraState.fileVideoPath,
       pickImage: (source) => store.dispatch(actions.pickImage(source)),
       playVideo: () => store.dispatch(actions.playAssetVideo()),
+      cropImage: () => store.dispatch(actions.cropImage()),
       playPortraitVideo: () => store.dispatch(actions.playPortraitVideo()),
       pickVideo: (source) => store.dispatch(actions.pickVideo(source)),
       loadStorageImage: (log) => store.dispatch(actions.loadStorageImage(log)),

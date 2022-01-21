@@ -3,7 +3,7 @@ import 'package:flat_and_fast/common/navigation/navigation_helper.dart';
 import 'package:flat_and_fast/common/utils/styles/styles.dart';
 import 'package:flat_and_fast/features/camera/camera_screen.dart';
 import 'package:flat_and_fast/features/carousel/carousels_screen.dart';
-import 'package:flat_and_fast/features/gradients/gradients_screen.dart';
+import 'package:flat_and_fast/features/controls/controls_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
         child: ListView(
           children: <Widget>[
             FeatureButton(
-              action: () => NavigationHelper.goToWidget(widget: const GradientScreen(), context: context),
+              action: () => NavigationHelper.goToWidget(widget: const ControlsScreen(), context: context),
               title: 'Controls',
             ),
             FeatureButton(

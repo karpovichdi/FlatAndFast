@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:flat_and_fast/common/redux/app/app_state.dart';
 import 'package:flat_and_fast/common/utils/log.dart';
 import 'package:flat_and_fast/common/utils/storage/paths.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:redux/redux.dart';
 import 'package:path/path.dart';
@@ -46,14 +48,16 @@ ThunkAction<AppState> pickImage(ImageSource source) {
       final image = await ImagePicker().pickImage(source: source);
       if (image == null) return;
 
-      final temporaryImage = await _saveFile(image.path, imageName);
+      final temporaryImagePath = await _saveFile(image.path, imageName);
       store.dispatch(
         PickImageAction(
-          path: temporaryImage,
+          path: temporaryImagePath,
         ),
       );
     } on PlatformException catch (e) {
-      print('User declined camera permissions: $e');
+      if (kDebugMode) {
+        print('User declined camera permissions: $e');
+      }
     }
   };
 }
@@ -72,43 +76,49 @@ ThunkAction<AppState> pickVideo(ImageSource source) {
         ),
       );
     } on PlatformException catch (e) {
-      print('User declined camera permissions: $e');
+      if (kDebugMode) {
+        print('User declined camera permissions: $e');
+      }
     }
   };
-  }
+}
 
-  ThunkAction<AppState> playAssetVideo() {
-    return (Store<AppState> store) async {
-      try {
-        store.dispatch(
-          PlayAssetVideoAction(
-            path: horizontalVideoPath,
-          ),
-        );
-      } on PlatformException catch (e) {
+ThunkAction<AppState> playAssetVideo() {
+  return (Store<AppState> store) async {
+    try {
+      store.dispatch(
+        PlayAssetVideoAction(
+          path: horizontalVideoPath,
+        ),
+      );
+    } on PlatformException catch (e) {
+      if (kDebugMode) {
         print('User declined camera permissions: $e');
       }
-    };
-  }
+    }
+  };
+}
 
-  ThunkAction<AppState> playPortraitVideo() {
-    return (Store<AppState> store) async {
-      try {
-        store.dispatch(
-          PlayAssetVideoAction(
-            path: portraitVideoPath,
-          ),
-        );
-      } on PlatformException catch (e) {
+ThunkAction<AppState> playPortraitVideo() {
+  return (Store<AppState> store) async {
+    try {
+      store.dispatch(
+        PlayAssetVideoAction(
+          path: portraitVideoPath,
+        ),
+      );
+    } on PlatformException catch (e) {
+      if (kDebugMode) {
         print('User declined camera permissions: $e');
       }
-    };
-  }
+    }
+  };
+}
 
 ThunkAction<AppState> loadStorageImage(Log log) {
   return (Store<AppState> store) async {
     try {
-      var newImagePath = '${Paths.documentsDir?.path}/$imageName';
+      var newImagePath = _getImagePath();
       var file = File(newImagePath);
       if (await file.exists()) {
         store.dispatch(
@@ -118,8 +128,44 @@ ThunkAction<AppState> loadStorageImage(Log log) {
         );
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
+  };
+}
+
+ThunkAction<AppState> cropImage() {
+  return (Store<AppState> store) async {
+    var newImagePath = _getImagePath();
+    var file = File(newImagePath);
+    if (!await file.exists()) {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) {
+        // user stopped image picking
+        return;
+      }
+    }
+    final File? croppedFile = await ImageCropper.cropImage(
+      sourcePath: file.path,
+      compressQuality: 90,
+      androidUiSettings: const AndroidUiSettings(lockAspectRatio: false),
+      iosUiSettings: const IOSUiSettings(aspectRatioLockEnabled: false),
+      aspectRatioPresets: [
+        CropAspectRatioPreset.original,
+        CropAspectRatioPreset.square,
+        CropAspectRatioPreset.ratio3x2,
+        CropAspectRatioPreset.ratio4x3,
+        CropAspectRatioPreset.ratio16x9,
+      ],
+    );
+    if (croppedFile == null) {
+      // user stopped cropping
+      return;
+    }
+
+    var newFilePath = await _saveFile(croppedFile.path, imageName);
+    store.dispatch(PickImageAction(path: newFilePath));
   };
 }
 
@@ -132,3 +178,5 @@ Future<String> _saveFile(String originalImagePath, String fileName) async {
   await File(originalImagePath).copy(newImagePath);
   return newImagePath;
 }
+
+String _getImagePath() => '${Paths.documentsDir?.path}/$imageName';

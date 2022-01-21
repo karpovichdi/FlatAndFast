@@ -7,7 +7,7 @@ import 'package:flat_and_fast/common/redux/app/app_state.dart';
 import 'package:flat_and_fast/common/utils/log.dart';
 import 'package:flat_and_fast/common/utils/styles/app_colors.dart';
 import 'package:flat_and_fast/common/utils/styles/styles.dart';
-import 'package:flat_and_fast/features/gradients/redux/controls_view_model.dart';
+import 'package:flat_and_fast/features/controls/redux/controls_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
@@ -26,8 +26,8 @@ const pageTextStyle = TextStyle(
   color: AppColors.black,
 );
 
-class GradientScreen extends StatelessWidget {
-  const GradientScreen({Key? key}) : super(key: key);
+class ControlsScreen extends StatelessWidget {
+  const ControlsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,6 @@
 import 'package:built_value/built_value.dart';
 import 'package:flat_and_fast/features/camera/redux/camera_state.dart';
-import 'package:flat_and_fast/features/gradients/redux/controls_screen_state.dart';
+import 'package:flat_and_fast/features/controls/redux/controls_screen_state.dart';
 
 part 'ui_state.g.dart';
 

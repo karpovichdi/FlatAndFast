@@ -14,6 +14,14 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../di.dart';
 
+const pageTitle = 'Photo / Video';
+const playHorizontalVideoText = 'Play horizontal video';
+const playPortraitVideoText = 'Play portrait video';
+const pickGalleryText = 'Pick gallery';
+const takePhotoText = 'Take a photo';
+const takeVideoText = 'Take a video';
+const cropImageText = 'Crop image';
+
 class CameraScreen extends StatefulWidget {
   const CameraScreen({Key? key}) : super(key: key);
 
@@ -25,6 +33,7 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   Widget build(BuildContext context) {
     const imageSize = 160.0;
+    const imagePadding = 48.0;
     return StoreConnector<AppState, CameraViewModel>(
         onInitialBuild: _initializeViewModel,
         converter: (store) {
@@ -34,7 +43,7 @@ class _CameraScreenState extends State<CameraScreen> {
           return Scaffold(
             appBar: AppBar(
               title: const Text(
-                'Photo / Video',
+                pageTitle,
                 style: TextStyles.appBarTitle,
               ),
             ),
@@ -45,17 +54,17 @@ class _CameraScreenState extends State<CameraScreen> {
                     Builder(builder: (context) {
                       if (viewModel.imagePath.isNotEmpty) {
                         return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 48.0),
+                          padding: const EdgeInsets.symmetric(vertical: imagePadding),
                           child: Center(
                             child: ClipOval(
                               child: LoadingMemoryImage(
                                 path: viewModel.imagePath,
                                 imageSize: imageSize,
                                 isBusy: viewModel.isLoading,
-                                loadingWidget: const Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: LoadingPage(),
-                                ),
+                                loadingWidget: const SizedBox(
+                                    width: imageSize,
+                                    height: imageSize,
+                                    child: LoadingPage()),
                               ),
                             ),
                           ),
@@ -72,23 +81,27 @@ class _CameraScreenState extends State<CameraScreen> {
                 ),
                 FeatureButton(
                   action: () => viewModel.playVideo(),
-                  title: 'Play horizontal video',
+                  title: playHorizontalVideoText,
                 ),
                 FeatureButton(
                   action: () => viewModel.playPortraitVideo(),
-                  title: 'Play portrait video',
+                  title: playPortraitVideoText,
                 ),
                 FeatureButton(
                   action: () => viewModel.pickImage(ImageSource.gallery),
-                  title: 'Pick gallery',
+                  title: pickGalleryText,
                 ),
                 FeatureButton(
                   action: () => viewModel.pickImage(ImageSource.camera),
-                  title: 'Take a photo',
+                  title: takePhotoText,
                 ),
                 FeatureButton(
                   action: () => viewModel.pickVideo(ImageSource.camera),
-                  title: 'Take a video',
+                  title: takeVideoText,
+                ),
+                FeatureButton(
+                  action: () => viewModel.cropImage(),
+                  title: cropImageText,
                 ),
               ],
             ),
