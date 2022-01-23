@@ -1,7 +1,11 @@
 import 'dart:math';
 
+import 'package:flat_and_fast/common/controls/buttons/feature_button.dart';
+import 'package:flat_and_fast/common/controls/cards/tinder/tinder_screen.dart';
+import 'package:flat_and_fast/common/controls/carousels/carousel_screen.dart';
 import 'package:flat_and_fast/common/controls/labels/arc_text.dart';
 import 'package:flat_and_fast/common/controls/pokeball.dart';
+import 'package:flat_and_fast/common/navigation/navigation_helper.dart';
 import 'package:flat_and_fast/common/net/network_client.dart';
 import 'package:flat_and_fast/common/redux/app/app_state.dart';
 import 'package:flat_and_fast/common/utils/log.dart';
@@ -83,7 +87,15 @@ class ControlsScreen extends StatelessWidget {
                     textStyle: pageTextStyle,
                     startAngle: arcTextStartPoint,
                   ),
-                )
+                ),
+                FeatureButton(
+                  action: () => NavigationHelper.goToWidget(widget: const TinderScreen(), context: context),
+                  title: 'Tinder',
+                ),
+                FeatureButton(
+                  action: () => NavigationHelper.goToWidget(widget: const CarouselScreen(), context: context),
+                  title: 'Carousel',
+                ),
               ],
             ),
           );

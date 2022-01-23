@@ -15,4 +15,9 @@ abstract class AppColors {
   static const redAccent = Colors.redAccent;
   static const orangeAccent = Colors.orangeAccent;
   static const black = Colors.black;
+  static const green = Colors.green;
+  static const blue = Colors.blue;
+  static const grey = Colors.grey;
+  static const red = Colors.red;
+  static const teal = Colors.teal;
 }
