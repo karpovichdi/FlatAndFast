@@ -1,3 +1,4 @@
+import 'package:flat_and_fast/common/utils/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
 
@@ -16,10 +17,13 @@ class LoadingPage extends StatelessWidget {
           if (Platform.isIOS) {
             return const CupertinoColoredLoadingIndicator(
               radius: 20,
+              color: AppColors.froly,
             );
           }
 
-          return const CircularProgressIndicator();
+          return const CircularProgressIndicator(
+            color: AppColors.froly,
+          );
         },
       ),
     );

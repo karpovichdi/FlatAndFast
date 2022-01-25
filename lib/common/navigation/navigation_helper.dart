@@ -7,4 +7,8 @@ abstract class NavigationHelper {
       MaterialPageRoute(builder: (context) => widget),
     );
   }
+
+  static Future goBack({required BuildContext context}) async {
+    Navigator.pop(context);
+  }
 }

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1006618720724-9oohur1kf6ujucq0n8fjo0ncpea7fte3.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1006618720724-9oohur1kf6ujucq0n8fjo0ncpea7fte3</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBwVXq3KCRiGWiUGXG7FV-EwYqvjevdUJI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1006618720724</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.flatAndFast</string>
+	<key>PROJECT_ID</key>
+	<string>flatandfast-6218e</string>
+	<key>STORAGE_BUCKET</key>
+	<string>flatandfast-6218e.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1006618720724:ios:695c9570ece6fb00223e41</string>
+</dict>
+</plist>

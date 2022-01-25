@@ -34,4 +34,44 @@ abstract class TextStyles {
     color: AppColors.dustyGray,
     fontSize: 18.0,
   );
+
+  static const errorMessage = TextStyle(
+    fontFamily: FontFamily.sFProDisplay,
+    fontWeight: FontWeight.w500,
+    color: AppColors.dustyGray,
+    fontSize: 18.0,
+  );
+
+  static const dialogButton = TextStyle(
+    fontFamily: FontFamily.sFProDisplay,
+    fontWeight: FontWeight.w500,
+    color: AppColors.mineShaft,
+    fontSize: 14.0,
+  );
+
+  static const headline3 = TextStyle(
+    fontFamily: FontFamily.sFProDisplay,
+    fontWeight: FontWeight.w600,
+    color: AppColors.black,
+    fontSize: 20.0,
+  );
+
+  static const headline1 = TextStyle(
+    fontFamily: FontFamily.sFProDisplay,
+    fontWeight: FontWeight.w600,
+    color: AppColors.mineShaft,
+    fontSize: 48.0,
+  );
+  static const headline2 = TextStyle(
+    fontFamily: FontFamily.sFProDisplay,
+    fontWeight: FontWeight.w600,
+    color: AppColors.mineShaft,
+    fontSize: 30.0,
+  );
+  static const headline2SecondaryColor = TextStyle(
+    fontFamily: FontFamily.sFProDisplay,
+    fontWeight: FontWeight.w600,
+    color: AppColors.nobel,
+    fontSize: 30.0,
+  );
 }

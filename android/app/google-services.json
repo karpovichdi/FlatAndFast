@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1006618720724",
+    "project_id": "flatandfast-6218e",
+    "storage_bucket": "flatandfast-6218e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1006618720724:android:31a2804b19d626ed223e41",
+        "android_client_info": {
+          "package_name": "com.example.flat_and_fast"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1006618720724-hdlm8ds40vu78ctceb94v4dkj93j38cv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEXVQ92uYwGKihxuBC09DNleDz7Vy_K4Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1006618720724-hdlm8ds40vu78ctceb94v4dkj93j38cv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

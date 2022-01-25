@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
 import 'package:redux_thunk/redux_thunk.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'common/redux/app/app_reducer.dart';
 import 'common/redux/app/app_state.dart';
@@ -24,6 +25,9 @@ Future<void> main() async {
       LoggingMiddleware<AppState>.printer(),
     ],
   );
+
+  await Firebase.initializeApp();
+
   runApp(FlatApp(null, store));
   _initialize();
 }

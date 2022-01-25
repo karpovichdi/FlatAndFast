@@ -17,7 +17,7 @@ class ControlsViewModel {
 
   static ControlsViewModel fromStore(Store<AppState> store) {
     return ControlsViewModel(
-      isLoading: store.state.uiState.gradientState.isLoading,
+      isLoading: store.state.uiState.controlsState.isLoading,
       loadSomething: (client, log) => store.dispatch(
         actions.loadSomething(client, log),
       ),

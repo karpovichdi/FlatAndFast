@@ -12,6 +12,10 @@ abstract class AppColors {
   static const darkBlur = Colors.black26;
   static const froly = Color(0xFFF7846C);
   static const mineShaft = Color(0xFF313131);
+  static const athensGray = Color(0xFFEFF0F4);
+  static const white70 = Color(0x70FFFFFF);
+  static const nobel = Color(0xFFB3B3B3);
+  static const orange = Color(0xFFf5c479);
   static const redAccent = Colors.redAccent;
   static const orangeAccent = Colors.orangeAccent;
   static const black = Colors.black;
