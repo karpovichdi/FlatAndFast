@@ -11,7 +11,11 @@ import 'package:flat_and_fast/features/firebase/utils/styles/firebase_dimensions
 import 'package:flat_and_fast/features/firebase/utils/styles/firebase_localization.dart';
 import 'package:flat_and_fast/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../../../common/controls/cards/tinder/tinder_button.dart';
 
 class FirebaseLoginScreen extends StatefulWidget {
   const FirebaseLoginScreen({Key? key}) : super(key: key);
@@ -104,9 +108,10 @@ class _FirebaseLoginScreenState extends State<FirebaseLoginScreen> {
                                 Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                   child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Expanded(
-                                        flex: 1,
+                                        flex: 2,
                                         child: ElevatedButton(
                                           child: const Text(
                                             FirebaseLocalization.backButtonTitle,
@@ -123,8 +128,24 @@ class _FirebaseLoginScreenState extends State<FirebaseLoginScreen> {
                                         ),
                                       ),
                                       const SizedBox(width: 12.0),
+                                      TinderButton(
+                                        elevation: 2.0,
+                                        buttonSize: 40.0,
+                                        iconSize: 40.0,
+                                        buttonBorder: 0.0,
+                                        positiveColor: AppColors.white,
+                                        icon: FontAwesomeIcons.google,
+                                        action: () => viewModel.googleLogin(
+                                          () => NavigationHelper.goToWidget(
+                                            widget: const FirebaseHome(),
+                                            context: context,
+                                          ),
+                                        ),
+                                        negativeColor: AppColors.froly,
+                                      ),
+                                      const SizedBox(width: 12.0),
                                       Expanded(
-                                        flex: 2,
+                                        flex: 5,
                                         child: ElevatedButton(
                                           child: const Text(
                                             FirebaseLocalization.loginText,
@@ -137,7 +158,7 @@ class _FirebaseLoginScreenState extends State<FirebaseLoginScreen> {
                                           onPressed: () => viewModel.login(
                                             emailController.text,
                                             passwordController.text,
-                                                () => NavigationHelper.goToWidget(
+                                            () => NavigationHelper.goToWidget(
                                               widget: const FirebaseHome(),
                                               context: context,
                                             ),

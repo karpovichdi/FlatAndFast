@@ -10,22 +10,22 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   factory AppState.initial() {
     return AppState(
-      uiState: UIState(),
       loginState: AuthState(),
+      uiState: UIState(),
     );
   }
 
   factory AppState({
-    required UIState uiState,
     required AuthState loginState,
+    required UIState uiState,
   }) {
     return _$AppState._(
-      uiState: uiState,
       authState: loginState,
+      uiState: uiState,
     );
   }
 
-  UIState get uiState;
-
   AuthState get authState;
+
+  UIState get uiState;
 }

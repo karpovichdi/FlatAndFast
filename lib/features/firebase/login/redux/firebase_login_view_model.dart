@@ -15,6 +15,7 @@ class FirebaseLoginViewModel {
     required this.loginFailedMessage,
     required this.user,
     required this.login,
+    required this.googleLogin,
     required this.dismissDialog,
     required this.showErrorDialog,
     required this.goBack,
@@ -31,6 +32,7 @@ class FirebaseLoginViewModel {
   final String loginFailedMessage;
 
   final Function(String, String, Function) login;
+  final Function(Function) googleLogin;
   final Function(Future Function()) navigateToSignUp;
   final Function(Future Function()) goBack;
   final Function() dismissDialog;
@@ -42,12 +44,13 @@ class FirebaseLoginViewModel {
     var user = store.state.uiState.firebaseLoginState.user;
     return FirebaseLoginViewModel(
       isLoading: store.state.uiState.firebaseLoginState.isLoading,
-      isAuthorized: store.state.authState.isAuthorized,
       user: user,
+      isAuthorized: user != null,
       loginFailedMessage: store.state.uiState.firebaseLoginState.authFailedException?.message ?? FirebaseLocalization.errorMessage,
       errorDialogVisible: store.state.uiState.firebaseLoginState.errorDialogVisible,
       hidePassword: store.state.uiState.firebaseLoginState.hidePassword,
       login: (email, password, navigateHome) => store.dispatch(firebase.login(email, password, navigateHome)),
+      googleLogin: (navigateHome) => store.dispatch(firebase.googleLogin(navigateHome)),
       dismissDialog: () => store.dispatch(firebase.dismissDialog()),
       showErrorDialog: () => store.dispatch(firebase.showDialog()),
       updateGlobalAuthState: () => store.dispatch(login_actions.changeIsAuthorizedState(user)),

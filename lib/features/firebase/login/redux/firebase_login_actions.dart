@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flat_and_fast/common/redux/app/app_state.dart';
-import 'package:flat_and_fast/common/redux/app/app_state_actions.dart';
 import 'package:flat_and_fast/common/utils/exceptions/login_failed_exception.dart';
 import 'package:flat_and_fast/common/utils/validation/validator.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 
@@ -86,4 +86,40 @@ ThunkAction<AppState> login(String email, String password, Function navigateToHo
       );
     }
   };
+}
+
+GoogleSignIn googleSignIn = GoogleSignIn();
+ThunkAction<AppState> googleLogin(Function navigateToHomeAction) {
+  return (Store<AppState> store) async {
+    try {
+      var googleUser = await googleSignIn.signIn();
+      if (googleUser == null) return;
+
+      var authentication = await googleUser.authentication;
+
+      var credential = GoogleAuthProvider.credential(
+        accessToken: authentication.accessToken,
+        idToken: authentication.idToken,
+      );
+
+      final user = await FirebaseAuth.instance.signInWithCredential(credential);
+      store.dispatch(LoginAction(isSuccessful: true, userCredential: user, authFailedException: null));
+      navigateToHomeAction();
+    } catch (error) {
+      store.dispatch(
+        LoginAction(
+          isSuccessful: false,
+          userCredential: null,
+          authFailedException: AuthFailedException(
+            message: Validator.deleteBrackets(error.toString()),
+          ),
+        ),
+      );
+    }
+  };
+}
+
+void googleLogout() {
+  googleSignIn.disconnect();
+  FirebaseAuth.instance.signOut();
 }

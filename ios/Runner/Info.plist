@@ -47,5 +47,16 @@
 	<string>To choose user profile image</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Used to capture audio for image picker plugin image</string>
+	<key>CFBundleURLTypes</key>
+    <array>
+    	<dict>
+    		<key>CFBundleTypeRole</key>
+    		<string>Editor</string>
+    		<key>CFBundleURLSchemes</key>
+    		<array>
+    			<string>com.googleusercontent.apps.1006618720724-9oohur1kf6ujucq0n8fjo0ncpea7fte3</string>
+    		</array>
+    	</dict>
+    </array>
 </dict>
 </plist>
