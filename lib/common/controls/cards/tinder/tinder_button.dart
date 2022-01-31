@@ -13,7 +13,7 @@ class TinderButton extends StatefulWidget {
     this.iconSize = 35.0,
     this.buttonSize = 60.0,
     this.buttonBorder = 1.0,
-    this.elevation = 1.0,
+    this.elevation = 0.0,
     this.buttonStatus = CardStatus.like,
     this.actualStatus = CardStatus.like,
   }) : super(key: key);

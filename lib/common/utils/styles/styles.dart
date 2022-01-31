@@ -23,7 +23,7 @@ abstract class ButtonStyles {
 abstract class TextStyles {
   static const button1 = TextStyle(
     fontFamily: FontFamily.sFProDisplay,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w400,
     color: AppColors.button1Text,
     fontSize: 17.0,
   );

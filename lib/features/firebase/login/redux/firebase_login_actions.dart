@@ -92,6 +92,8 @@ GoogleSignIn googleSignIn = GoogleSignIn();
 ThunkAction<AppState> googleLogin(Function navigateToHomeAction) {
   return (Store<AppState> store) async {
     try {
+      store.dispatch(LoadingStateChangedAction(isLoading: true));
+
       var googleUser = await googleSignIn.signIn();
       if (googleUser == null) return;
 

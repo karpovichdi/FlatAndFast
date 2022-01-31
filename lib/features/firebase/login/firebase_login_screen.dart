@@ -50,16 +50,17 @@ class _FirebaseLoginScreenState extends State<FirebaseLoginScreen> {
                     SizedBox(
                       width: width,
                       height: height * FirebaseDimensions.imageHeightCoefficient,
-                      child: Image.asset(
-                        Assets.images.purchases.path,
-                      ),
+                      child: Image.asset(Assets.images.purchases.path),
                     ),
                     Builder(builder: (context) {
                       if (viewModel.isLoading) {
-                        return const Center(
-                          child: LoadingPage(),
+                        return SizedBox(
+                          width: width,
+                          height: height * (1 - FirebaseDimensions.imageHeightCoefficient),
+                          child: const LoadingPage(),
                         );
                       }
+
                       return Column(
                         children: [
                           Padding(

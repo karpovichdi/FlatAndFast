@@ -1,0 +1,4 @@
+enum FirebaseFeature {
+  fileUpload,
+  pushNotifications
+}

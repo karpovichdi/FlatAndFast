@@ -6,21 +6,37 @@ class FeatureButton extends StatelessWidget {
     Key? key,
     required this.action,
     required this.title,
+    this.icon,
   }) : super(key: key);
 
   final Function() action;
   final String title;
+  final Icon? icon;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: ElevatedButton(
-        onPressed: action,
-        child: Text(
-          title,
-          style: TextStyles.button1,
-        ),
+      child: Builder(
+        builder: (context) {
+          if(icon != null){
+            return ElevatedButton.icon(
+              icon: icon!,
+              onPressed: action,
+              label: Text(
+                title,
+                style: TextStyles.button1,
+              ),
+            );
+          }
+          return ElevatedButton(
+            onPressed: action,
+            child: Text(
+              title,
+              style: TextStyles.button1,
+            ),
+          );
+        }
       ),
     );
   }
