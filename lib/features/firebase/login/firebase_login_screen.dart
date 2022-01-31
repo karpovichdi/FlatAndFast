@@ -3,7 +3,7 @@ import 'package:flat_and_fast/common/controls/loading/loading_page.dart';
 import 'package:flat_and_fast/common/navigation/navigation_helper.dart';
 import 'package:flat_and_fast/common/redux/app/app_state.dart';
 import 'package:flat_and_fast/common/utils/styles/app_colors.dart';
-import 'package:flat_and_fast/features/firebase/home/firebase_home.dart';
+import 'package:flat_and_fast/features/firebase/home/firebase_home_screen.dart';
 import 'package:flat_and_fast/features/firebase/login/redux/firebase_login_view_model.dart';
 import 'package:flat_and_fast/features/firebase/sign_up/firebase_sign_up_screen.dart';
 import 'package:flat_and_fast/features/firebase/utils/styles/firebase_colors.dart';
@@ -137,7 +137,7 @@ class _FirebaseLoginScreenState extends State<FirebaseLoginScreen> {
                                         icon: FontAwesomeIcons.google,
                                         action: () => viewModel.googleLogin(
                                           () => NavigationHelper.goToWidget(
-                                            widget: const FirebaseHome(),
+                                            widget: const FirebaseHomeScreen(),
                                             context: context,
                                           ),
                                         ),
@@ -159,7 +159,7 @@ class _FirebaseLoginScreenState extends State<FirebaseLoginScreen> {
                                             emailController.text,
                                             passwordController.text,
                                             () => NavigationHelper.goToWidget(
-                                              widget: const FirebaseHome(),
+                                              widget: const FirebaseHomeScreen(),
                                               context: context,
                                             ),
                                           ),
