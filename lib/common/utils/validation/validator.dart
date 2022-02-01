@@ -1,5 +1,5 @@
 abstract class Validator{
   static String deleteBrackets(String str){
-    return str.split(']').last;
+    return str.split(']').first;
   }
 }

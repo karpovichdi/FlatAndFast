@@ -34,6 +34,8 @@ class _FloatingMenuButtonState extends State<FloatingMenuButton> with SingleTick
   Animation? _degOneTranslationAnimation, _degTwoTranslationAnimation, _degThreeTranslationAnimation;
   Animation? _rotationAnimation;
 
+  MenuState? _menuState;
+
   @override
   void initState() {
     AnimationController animationController = _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 250));
@@ -60,6 +62,13 @@ class _FloatingMenuButtonState extends State<FloatingMenuButton> with SingleTick
   @override
   Widget build(BuildContext context) {
     AnimationController animationController = _animationController!;
+
+    _menuState = MenuState.of(context);
+    var menuState = _menuState!;
+    if (menuState.menuCloseRequested) {
+      _closeButtonMenuIfOpened(animationController);
+    }
+
     return Stack(
       alignment: Alignment.bottomRight,
       children: [
@@ -76,7 +85,7 @@ class _FloatingMenuButtonState extends State<FloatingMenuButton> with SingleTick
             alignment: Alignment.center,
             child: CircularButton(
               action: () {
-                _animateButtonMenu(animationController);
+                _animateButtonMenuClick(animationController);
               },
               color: AppColors.red,
               width: smallButtonSize,
@@ -93,7 +102,7 @@ class _FloatingMenuButtonState extends State<FloatingMenuButton> with SingleTick
             child: CircularButton(
               action: () {
                 widget.secondButtonAction();
-                _animateButtonMenu(animationController);
+                _animateButtonMenuClick(animationController);
               },
               color: widget.secondButtonColor,
               width: smallButtonSize,
@@ -110,7 +119,7 @@ class _FloatingMenuButtonState extends State<FloatingMenuButton> with SingleTick
             child: CircularButton(
               action: () {
                 widget.firstButtonAction();
-                _animateButtonMenu(animationController);
+                _animateButtonMenuClick(animationController);
               },
               color: widget.firstButtonColor,
               width: smallButtonSize,
@@ -124,7 +133,7 @@ class _FloatingMenuButtonState extends State<FloatingMenuButton> with SingleTick
           alignment: Alignment.center,
           child: CircularButton(
             action: () {
-              _animateButtonMenu(animationController);
+              _animateButtonMenuClick(animationController);
             },
             color: AppColors.froly,
             width: bigButtonSize,
@@ -136,11 +145,38 @@ class _FloatingMenuButtonState extends State<FloatingMenuButton> with SingleTick
     );
   }
 
-  _animateButtonMenu(AnimationController animationController) {
+  _animateButtonMenuClick(AnimationController animationController) {
     if (animationController.isCompleted) {
       animationController.reverse();
     } else {
       animationController.forward();
     }
+  }
+
+  _closeButtonMenuIfOpened(AnimationController animationController) {
+    final menuState = _menuState;
+    if (menuState != null) {
+      animationController.reverse();
+      menuState.onValueChanged(false);
+    }
+  }
+}
+
+class MenuState extends InheritedWidget {
+  const MenuState({
+    Key? key,
+    required this.menuCloseRequested,
+    required this.onValueChanged,
+    required Widget child,
+  }) : super(key: key, child: child);
+
+  final bool menuCloseRequested;
+  final ValueChanged<bool> onValueChanged;
+
+  @override
+  bool updateShouldNotify(MenuState oldWidget) => menuCloseRequested != oldWidget.menuCloseRequested || oldWidget.onValueChanged != onValueChanged;
+
+  static MenuState? of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<MenuState>();
   }
 }

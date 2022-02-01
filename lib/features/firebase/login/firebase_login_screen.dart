@@ -193,6 +193,19 @@ class _FirebaseLoginScreenState extends State<FirebaseLoginScreen> {
                             ),
                           ),
                           const SizedBox(height: FirebaseDimensions.passwordTopPadding),
+                          GestureDetector(
+                            onTap: () => NavigationHelper.goToWidget(
+                                widget: const FirebaseHomeScreen(),
+                                context: context,
+                              ),
+                            child: const Text.rich(
+                              TextSpan(
+                                text: 'Debug login ',
+                                style: TextStyle(color: FirebaseColors.loginButtonColor),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: FirebaseDimensions.passwordTopPadding),
                         ],
                       );
                     }),

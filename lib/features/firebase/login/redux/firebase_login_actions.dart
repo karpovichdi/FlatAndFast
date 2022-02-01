@@ -71,7 +71,7 @@ ThunkAction<AppState> login(String email, String password, Function navigateToHo
     try {
       store.dispatch(LoadingStateChangedAction(isLoading: true));
 
-      final user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+      final UserCredential user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
       store.dispatch(LoginAction(isSuccessful: true, userCredential: user, authFailedException: null));
       navigateToHomeAction();
     } catch (error) {

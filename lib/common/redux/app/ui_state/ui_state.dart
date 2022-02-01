@@ -14,20 +14,20 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   factory UIState() {
     return _$UIState._(
       controlsState: ControlsScreenState.initial(),
+      firebaseHomeState: FirebaseHomeState.initial(),
       cameraState: CameraState.initial(),
       firebaseLoginState: FirebaseLoginState.initial(),
-      firebaseHomeState: FirebaseHomeState.initial(),
       firebaseSignUpState: FirebaseSignUpState.initial(),
     );
   }
 
   ControlsScreenState get controlsState;
 
+  FirebaseHomeState get firebaseHomeState;
+
   CameraState get cameraState;
 
   FirebaseLoginState get firebaseLoginState;
-
-  FirebaseHomeState get firebaseHomeState;
 
   FirebaseSignUpState get firebaseSignUpState;
 }

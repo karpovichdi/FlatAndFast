@@ -70,6 +70,7 @@ class _LoadingNetworkImageState extends State<LoadingNetworkImage> {
 
     _image = Image.network(
       widget.imageUrl,
+      fit: BoxFit.cover,
       height: widget.imageSize,
       width: widget.imageSize,
     );
