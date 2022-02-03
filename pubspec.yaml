@@ -20,13 +20,7 @@ dependencies:
   redux_thunk: ^0.4.0
   redux_logging: ^0.5.0
 
-  firebase_storage: ^8.0.3
-  firebase_core: ^1.12.0
-
   cloud_firestore: ^1.0.5
-
-  firebase_auth: ^1.1.0
-  google_sign_in: ^5.2.3
 
   file_picker: ^4.3.3
 
@@ -49,6 +43,16 @@ dependencies:
   built_value:
   built_collection:
   flutter_gen:
+
+  flutter_local_notifications: ^9.2.0
+
+  firebase_messaging: ^11.2.6
+  firebase_analytics: ^9.1.0
+  firebase_storage: ^8.0.3
+  firebase_core: ^1.12.0
+  firebase_auth: ^1.1.0
+
+  google_sign_in: ^5.2.3
 
 dev_dependencies:
   flutter_test:

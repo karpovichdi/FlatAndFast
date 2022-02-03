@@ -6,6 +6,8 @@ import 'common/redux/app/app_state.dart';
 import 'common/navigation/navigation_key.dart';
 import 'common/utils/styles/app_colors.dart';
 import 'common/utils/styles/styles.dart';
+import 'features/firebase/home/tabs/green_page.dart';
+import 'features/firebase/home/tabs/red_page.dart';
 import 'features/home/home_screen.dart';
 
 class FlatApp extends StatelessWidget {
@@ -20,6 +22,10 @@ class FlatApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         navigatorKey: NavigatorKey.key,
+        routes: {
+          'red' : (_) => const RedPage(),
+          'green' : (_) => const GreenPage(),
+        },
         title: 'FlatAndFast',
         theme: theme.copyWith(
           scaffoldBackgroundColor: AppColors.bgScreen,

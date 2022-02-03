@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flat_and_fast/common/services/local_notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:redux/redux.dart';
@@ -12,6 +14,13 @@ import 'common/redux/app/app_state.dart';
 import 'common/utils/storage/paths.dart';
 import 'di.dart';
 import 'flat_app.dart';
+
+
+/// Receiving notifications, when app in background
+Future<void> backgroundHandler(RemoteMessage message) async {
+  print('bazinga 1: ${message.data}');
+  print('bazinga 2: ${message.notification?.title}');
+}
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +36,7 @@ Future<void> main() async {
   );
 
   await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(backgroundHandler);
 
   runApp(FlatApp(null, store));
   _initialize();
