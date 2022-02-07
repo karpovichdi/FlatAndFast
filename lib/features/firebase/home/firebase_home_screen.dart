@@ -2,6 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flat_and_fast/common/controls/animated/buttons/floating_menu_button.dart';
 import 'package:flat_and_fast/common/controls/app_bars/firebase_home_app_bar.dart';
+import 'package:flat_and_fast/common/controls/containers/circle_container.dart';
 import 'package:flat_and_fast/common/controls/dialogs/image_card_dialog.dart';
 import 'package:flat_and_fast/common/controls/image/loading_network_image.dart';
 import 'package:flat_and_fast/common/controls/loading/loading_page.dart';
@@ -15,6 +16,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import '../../../common/controls/dialogs/information_dialog.dart';
 import '../../../common/redux/app/app_state.dart';
 import '../../../common/utils/styles/dimensions.dart';
+import 'dart:io' show Platform;
 
 const homeTitle = 'Home';
 
@@ -124,64 +126,81 @@ class _FirebaseHomeScreenState extends State<FirebaseHomeScreen> {
                               SliverList(
                                 delegate: SliverChildBuilderDelegate(
                                   (BuildContext context, int index) {
-                                    return GestureDetector(
-                                      onTap: () => _cellClicked(viewModel, index),
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                                        child: SizedBox(
-                                          height: 90.0,
-                                          child: Card(
-                                            elevation: 4.0,
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(right: 8.0),
-                                                    child: SizedBox(
-                                                      width: 70.0,
-                                                      child: ClipOval(
-                                                        child: LoadingNetworkImage(
-                                                          imageSize: 70.0,
-                                                          imageUrl: viewModel.thumbnails?[index].url ?? '',
-                                                          isBusy: false,
-                                                          loadingWidget: const SizedBox(
-                                                            height: 40.0,
-                                                            width: 20.0,
-                                                            child: LoadingPage(),
-                                                          ),
-                                                        ),
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                                      child: Card(
+                                        elevation: 4.0,
+                                        child: ListTile(
+                                          leading: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                width: 50.0,
+                                                child: FittedBox(
+                                                  child: ClipOval(
+                                                    child: LoadingNetworkImage(
+                                                      imageSize: 70.0,
+                                                      imageUrl: viewModel.thumbnails?[index].url ?? '',
+                                                      isBusy: false,
+                                                      loadingWidget: const SizedBox(
+                                                        height: 40.0,
+                                                        width: 40.0,
+                                                        child: LoadingPage(),
                                                       ),
                                                     ),
                                                   ),
-                                                  const SizedBox(width: 8.0),
-                                                  Expanded(
-                                                    flex: 6,
-                                                    child: Text('${viewModel.thumbnails?[index].name}'),
-                                                  ),
-                                                  Expanded(
-                                                    flex: 1,
-                                                    child: Padding(
-                                                      padding: const EdgeInsets.only(right: 8.0),
-                                                      child: Builder(builder: (context) {
-                                                        if (viewModel.downloadingFiles.contains(viewModel.thumbnails?[index])) {
-                                                          return const FittedBox(child: LoadingPage());
-                                                        } else if (viewModel.downloadedFiles.contains(viewModel.thumbnails?[index])) {
-                                                          return Icon(
-                                                            Icons.image,
-                                                            color: Colors.blueAccent.shade100,
-                                                          );
-                                                        }
-                                                        return Icon(
-                                                          Icons.download_sharp,
-                                                          color: Colors.blueAccent.shade100,
-                                                        );
-                                                      }),
-                                                    ),
-                                                  ),
-                                                ],
+                                                ),
                                               ),
+                                            ],
+                                          ),
+                                          subtitle: SizedBox(
+                                            height: 60.0,
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Flexible(
+                                                  fit: FlexFit.tight,
+                                                  child: Text('${viewModel.thumbnails?[index].name}', overflow: TextOverflow.ellipsis),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.only(right: 8.0),
+                                                  child: Builder(builder: (context) {
+                                                    if (viewModel.downloadingFiles.contains(viewModel.thumbnails?[index])) {
+                                                      return const LoadingPage();
+                                                    } else if (viewModel.downloadedFiles.contains(viewModel.thumbnails?[index])) {
+                                                      return Row(
+                                                        children: [
+                                                          IconButton(
+                                                            alignment: Alignment.centerRight,
+                                                            onPressed: () => viewModel.openImage(viewModel.thumbnails?[index]),
+                                                            icon: Icon(
+                                                              Icons.image,
+                                                              color: Colors.blueAccent.shade100,
+                                                            ),
+                                                          ),
+                                                          IconButton(
+                                                            alignment: Alignment.centerRight,
+                                                            onPressed: () => viewModel.shareImage(viewModel.thumbnails?[index]),
+                                                            icon: Icon(
+                                                              Icons.share,
+                                                              color: Colors.blueAccent.shade100,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    }
+                                                    return IconButton(
+                                                      alignment: Alignment.centerRight,
+                                                      onPressed: () => viewModel.downloadFile(viewModel.thumbnails?[index]),
+                                                      icon: Icon(
+                                                        Icons.download_sharp,
+                                                        size:25.0,
+                                                        color: Colors.blueAccent.shade100,
+                                                      ),
+                                                    );
+                                                  }),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ),
@@ -245,30 +264,32 @@ class _FirebaseHomeScreenState extends State<FirebaseHomeScreen> {
   _initializeViewModel(FirebaseHomeViewModel viewModel) {
     viewModel.listAllThumbnails();
 
-    LocalNotificationService.initialize(context);
+    if (Platform.isAndroid) {
+      LocalNotificationService.initialize(context);
 
-    /// Put message in notification bar and open app after
-    /// click on this message, if app terminated.
-    /// If value != null then user clicked on message
-    FirebaseMessaging.instance.getInitialMessage().then((message) {
-      if(message != null){
+      /// Put message in notification bar and open app after
+      /// click on this message, if app terminated.
+      /// If value != null then user clicked on message
+      FirebaseMessaging.instance.getInitialMessage().then((message) {
+        if (message != null) {
+          String routeFromMessage = message.data['route'];
+          Navigator.of(context).pushNamed(routeFromMessage);
+        }
+      });
+
+      /// foreground work
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        LocalNotificationService.display(message);
+      });
+
+      /// app open, but in background
+      FirebaseMessaging.onMessageOpenedApp.listen((message) {
         String routeFromMessage = message.data['route'];
+        print('Result: ');
+        print(routeFromMessage);
         Navigator.of(context).pushNamed(routeFromMessage);
-      }
-    });
-
-    /// foreground work
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      LocalNotificationService.display(message);
-    });
-
-    /// app open, but in background
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      String routeFromMessage = message.data['route'];
-      print('Result: ');
-      print(routeFromMessage);
-      Navigator.of(context).pushNamed(routeFromMessage);
-    });
+      });
+    }
   }
 
   bool _onScrolled(ScrollNotification scrollNotification) {
@@ -276,15 +297,6 @@ class _FirebaseHomeScreenState extends State<FirebaseHomeScreen> {
       _setMenuCloseRequest(true);
     }
     return true;
-  }
-
-  _cellClicked(FirebaseHomeViewModel viewModel, int index) {
-    var thumbnail = viewModel.thumbnails?[index];
-    if (viewModel.downloadedFiles.contains(thumbnail)) {
-      viewModel.openImage(thumbnail);
-    } else {
-      viewModel.downloadFile(thumbnail);
-    }
   }
 
   _setMenuCloseRequest(bool value) {

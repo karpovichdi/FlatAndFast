@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:path/path.dart';
+import 'package:share/share.dart' as share;
 
 import '../../../../common/redux/app/app_state.dart';
 import '../../api/firebase_api.dart';
@@ -59,6 +60,12 @@ class FileDownloaded {
 
 class OpenImage {
   OpenImage({required this.file});
+
+  final FirebaseFile file;
+}
+
+class ShareImage {
+  ShareImage({required this.file});
 
   final FirebaseFile file;
 }
@@ -126,6 +133,17 @@ ThunkAction<AppState> openImage(FirebaseFile? file) {
   return (Store<AppState> store) async {
     if (file == null) return;
     store.dispatch(OpenImage(file: file));
+  };
+}
+
+ThunkAction<AppState> shareImage(FirebaseFile? file) {
+  return (Store<AppState> store) async {
+    if (file == null) return;
+
+    var path = file.file!.path;
+
+    share.Share.shareFiles([path]);
+    store.dispatch(ShareImage(file: file));
   };
 }
 
@@ -215,7 +233,7 @@ Future<File> downloadFileDEBUG(String url, String fileName, String dir) async {
     var response = await request.close();
     if (response.statusCode == 200) {
       var bytes = await consolidateHttpClientResponseBytes(response);
-      filePath = '$dir/$fileName';
+      filePath = '$dir/$fileName.jpg';
       file = File(filePath);
       await file.writeAsBytes(bytes);
     } else {

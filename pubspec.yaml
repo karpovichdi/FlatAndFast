@@ -40,6 +40,8 @@ dependencies:
   injectable: ^1.5.0
   get_it: ^7.2.0
 
+  share:
+
   built_value:
   built_collection:
   flutter_gen:

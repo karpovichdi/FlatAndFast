@@ -13,6 +13,7 @@ final firebaseHomeReducer = combineReducers<FirebaseHomeState>([
   TypedReducer<FirebaseHomeState, FileDownloading>(_fileDownloading),
   TypedReducer<FirebaseHomeState, FileDownloaded>(_fileDownloaded),
   TypedReducer<FirebaseHomeState, OpenImage>(_openImage),
+  TypedReducer<FirebaseHomeState, ShareImage>(_shareImage),
   TypedReducer<FirebaseHomeState, CloseImage>(_closeImage),
   TypedReducer<FirebaseHomeState, ChangeApi>(_changeApi),
 ]);
@@ -38,6 +39,12 @@ FirebaseHomeState _uploadProgressChanged(FirebaseHomeState state, UploadProgress
 FirebaseHomeState _openImage(FirebaseHomeState state, OpenImage action) {
   return state.rebuild((builder) => builder
     ..openedImage = action.file
+    ..build());
+}
+
+FirebaseHomeState _shareImage(FirebaseHomeState state, ShareImage action) {
+  return state.rebuild((builder) => builder
+    ..openedImage = state.openedImage
     ..build());
 }
 

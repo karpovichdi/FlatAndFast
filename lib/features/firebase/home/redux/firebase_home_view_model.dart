@@ -17,6 +17,7 @@ class FirebaseHomeViewModel {
     required this.selectFile,
     required this.uploadFile,
     required this.openImage,
+    required this.shareImage,
     required this.closeImage,
     required this.openedImage,
     required this.changeApi,
@@ -41,6 +42,7 @@ class FirebaseHomeViewModel {
   final Function(FirebaseFeature) changeSelectedFeature;
   final Function(FirebaseFile?) downloadFile;
   final Function(FirebaseFile?) openImage;
+  final Function(FirebaseFile?) shareImage;
   final Function selectFile;
   final Function closeImage;
   final Function uploadFile;
@@ -64,6 +66,7 @@ class FirebaseHomeViewModel {
       selectFile: () => store.dispatch(actions.selectFile()),
       changeApi: () => store.dispatch(actions.changeApi()),
       openImage: (file) => store.dispatch(actions.openImage(file)),
+      shareImage: (file) => store.dispatch(actions.shareImage(file)),
       closeImage: () => store.dispatch(actions.closeImage()),
       downloadFile: (file) => store.dispatch(actions.downloadSelectedFile(file, realApi)),
       listAllThumbnails: () => store.dispatch(actions.listAllFiles(realApi)),
