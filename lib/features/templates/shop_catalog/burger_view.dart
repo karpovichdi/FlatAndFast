@@ -32,9 +32,12 @@ class _BurgerViewControllerState extends State<BurgerViewController> {
 
   @override
   Widget build(BuildContext context) {
-    return PageView(
-        physics: const ClampingScrollPhysics(),
-        children: _burgerViews!);
+    return SizedBox(
+      height: 225.0,
+      child: PageView(
+          physics: const ClampingScrollPhysics(),
+          children: _burgerViews!),
+    );
   }
 }
 
@@ -66,7 +69,6 @@ class _BurgerViewState extends State<BurgerView> {
     return Stack(
       children: <Widget>[
         Container(
-          height: 240.0,
           decoration: BoxDecoration(image: DecorationImage(image: widget.image.image, fit: BoxFit.cover)),
         ),
         Column(
