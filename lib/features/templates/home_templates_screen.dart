@@ -1,11 +1,13 @@
 import 'package:flat_and_fast/features/templates/profile/profile_screen.dart';
 import 'package:flat_and_fast/features/templates/shop_catalog/shop_catalog_screen.dart';
 import 'package:flat_and_fast/features/templates/talent_hire/talent_hire_screen.dart';
+import 'package:flat_and_fast/features/templates/travel_diary/travel_diary_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/controls/buttons/feature_button.dart';
 import '../../common/navigation/navigation_helper.dart';
 import '../../common/utils/styles/styles.dart';
+import 'furniture/furniture_screen.dart';
 import 'login/login_screen.dart';
 
 const pageTitle = 'UI Templates';
@@ -13,6 +15,8 @@ const talentHireTitle = 'Talent hire';
 const loginTitle = 'Login';
 const profileTitle = 'Dynamic background';
 const shopCatalogTitle = 'Catalog';
+const travelDiaryTitle = 'Social web';
+const furnitureTitle = 'Furniture';
 
 class HomeTemplatesScreen extends StatelessWidget {
   const HomeTemplatesScreen({Key? key}) : super(key: key);
@@ -44,6 +48,14 @@ class HomeTemplatesScreen extends StatelessWidget {
             FeatureButton(
               action: () => NavigationHelper.goToWidget(widget: const ShopCatalogScreen(), context: context),
               title: shopCatalogTitle,
+            ),
+            FeatureButton(
+              action: () => NavigationHelper.goToWidget(widget: const TravelDiaryScreen(), context: context),
+              title: travelDiaryTitle,
+            ),
+            FeatureButton(
+              action: () => NavigationHelper.goToWidget(widget: const FurnitureScreen(), context: context),
+              title: furnitureTitle,
             ),
           ],
         ),
