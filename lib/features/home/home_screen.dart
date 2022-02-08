@@ -3,6 +3,7 @@ import 'package:flat_and_fast/common/navigation/navigation_helper.dart';
 import 'package:flat_and_fast/common/utils/styles/styles.dart';
 import 'package:flat_and_fast/features/camera/camera_screen.dart';
 import 'package:flat_and_fast/features/controls/controls_screen.dart';
+import 'package:flat_and_fast/features/databases/databases_screen.dart';
 import 'package:flat_and_fast/features/firebase/login/firebase_login_screen.dart';
 import 'package:flat_and_fast/features/templates/home_templates_screen.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ const carouselTitle = 'Carousel';
 const photoVideoTitle = 'Photo / Video';
 const firebaseTitle = 'Firebase';
 const pageTemplatesTitle = 'Page templates';
+const databasesTitle = 'Databases';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -44,6 +46,10 @@ class HomeScreen extends StatelessWidget {
             FeatureButton(
               action: () => NavigationHelper.goToWidget(widget: const HomeTemplatesScreen(), context: context),
               title: pageTemplatesTitle,
+            ),
+            FeatureButton(
+              action: () => NavigationHelper.goToWidget(widget: const DatabasesScreen(), context: context),
+              title: databasesTitle,
             ),
           ],
         ),

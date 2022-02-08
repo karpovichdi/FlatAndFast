@@ -5,6 +5,8 @@ abstract class FirebaseLocalization {
   static const haveNotAccountText = 'Don\'t have an account?';
   static const signUpText = 'Sign Up';
   static const errorTitle = 'Error';
+  static const title = 'Title';
+  static const description = 'Description';
   static const successTitle = 'Success';
   static const cancelTitle = 'Cancel';
   static const backButtonTitle = 'Back';

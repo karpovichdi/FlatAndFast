@@ -4,6 +4,8 @@ import 'package:flat_and_fast/features/controls/redux/controls_screen_state.dart
 import 'package:flat_and_fast/features/firebase/login/redux/firebase_login_state.dart';
 import 'package:flat_and_fast/features/firebase/sign_up/redux/firebase_sign_up_state.dart';
 
+import '../../../../features/databases/sqlite/details/redux/sqlite_details_state.dart';
+import '../../../../features/databases/sqlite/redux/sqlite_state.dart';
 import '../../../../features/firebase/home/redux/firebase_home_state.dart';
 
 part 'ui_state.g.dart';
@@ -13,6 +15,8 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
 
   factory UIState() {
     return _$UIState._(
+      sqliteState: SQLiteState.initial(),
+      sqliteDetailsState: SQLiteDetailsState.initial(),
       controlsState: ControlsScreenState.initial(),
       firebaseHomeState: FirebaseHomeState.initial(),
       cameraState: CameraState.initial(),
@@ -20,6 +24,10 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       firebaseSignUpState: FirebaseSignUpState.initial(),
     );
   }
+
+  SQLiteState get sqliteState;
+
+  SQLiteDetailsState get sqliteDetailsState;
 
   ControlsScreenState get controlsState;
 

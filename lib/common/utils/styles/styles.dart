@@ -56,6 +56,13 @@ abstract class TextStyles {
     fontSize: 20.0,
   );
 
+  static const medium = TextStyle(
+    fontFamily: FontFamily.sFProDisplay,
+    fontWeight: FontWeight.w400,
+    color: AppColors.black,
+    fontSize: 20.0,
+  );
+
   static const headline1 = TextStyle(
     fontFamily: FontFamily.sFProDisplay,
     fontWeight: FontWeight.w600,
