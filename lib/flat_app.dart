@@ -4,8 +4,7 @@ import 'package:redux/redux.dart';
 
 import 'common/redux/app/app_state.dart';
 import 'common/navigation/navigation_key.dart';
-import 'common/utils/styles/app_colors.dart';
-import 'common/utils/styles/styles.dart';
+import 'common/utils/styles/themes.dart';
 import 'features/firebase/home/tabs/green_page.dart';
 import 'features/firebase/home/tabs/red_page.dart';
 import 'features/home/home_screen.dart';
@@ -16,26 +15,26 @@ class FlatApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = ThemeData();
     return StoreProvider(
       store: store,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        navigatorKey: NavigatorKey.key,
-        routes: {
-          'red' : (_) => const RedPage(),
-          'green' : (_) => const GreenPage(),
-        },
-        title: 'FlatAndFast',
-        theme: theme.copyWith(
-          scaffoldBackgroundColor: AppColors.bgScreen,
-          appBarTheme: AppBarStyles.appBarTheme,
-          colorScheme: theme.colorScheme.copyWith(
-            primary: AppColors.primary,
-          ),
-          elevatedButtonTheme: ButtonStyles.elevatedButtonTheme,
-        ),
-        home: const HomeScreen(),
+      child: ThemeManagerWrapper(
+        initialValue: ThemeMode.light,
+        child: Builder(builder: (context) {
+          ThemeManager? themeManager = ThemeManagerWrapper.of(context);
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            navigatorKey: NavigatorKey.key,
+            routes: {
+              'red': (_) => const RedPage(),
+              'green': (_) => const GreenPage(),
+            },
+            title: 'FlatAndFast',
+            themeMode: themeManager?.theme,
+            theme: MyThemes.light,
+            darkTheme: MyThemes.dark,
+            home: const HomeScreen(),
+          );
+        }),
       ),
     );
   }

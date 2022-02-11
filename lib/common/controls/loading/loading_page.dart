@@ -7,7 +7,10 @@ import 'cupertino_colored_loading_indicator.dart';
 class LoadingPage extends StatelessWidget {
   const LoadingPage({
     Key? key,
+    this.color
   }) : super(key: key);
+
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +18,14 @@ class LoadingPage extends StatelessWidget {
       child: Builder(
         builder: (context) {
           if (Platform.isIOS) {
-            return const CupertinoColoredLoadingIndicator(
+            return CupertinoColoredLoadingIndicator(
               radius: 20,
-              color: AppColors.froly,
+              color: color ?? AppColors.froly,
             );
           }
 
-          return const CircularProgressIndicator(
-            color: AppColors.froly,
+          return CircularProgressIndicator(
+            color: color ?? AppColors.froly,
           );
         },
       ),

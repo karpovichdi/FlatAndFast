@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 
 import '../../../features/firebase/utils/styles/firebase_dimensions.dart';
 import '../../../features/firebase/utils/styles/firebase_localization.dart';
+import '../../../gen/fonts.gen.dart';
 import '../../models/note.dart';
+import '../../utils/styles/themes.dart';
 
 class CreateNoteDialog extends StatefulWidget {
   const CreateNoteDialog({
@@ -17,6 +19,7 @@ class CreateNoteDialog extends StatefulWidget {
     required this.message,
     this.backgroundColor = AppColors.white70,
     this.buttonBackgroundColor = AppColors.froly,
+    this.cardColor = AppColors.athensGray,
     this.dialogWidth = 280.0,
     this.dialogHeight = 380.0,
     this.corners = 10.0,
@@ -30,6 +33,7 @@ class CreateNoteDialog extends StatefulWidget {
   final Function(Note) saveAction;
   final String title;
   final String message;
+  final Color cardColor;
   final Color backgroundColor;
   final Color buttonBackgroundColor;
   final double dialogWidth;
@@ -56,6 +60,8 @@ class _CreateNoteDialogState extends State<CreateNoteDialog> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeManager? themeManager = ThemeManagerWrapper.of(context);
+
     return GestureDetector(
       onTap: () => widget.dismissAction(),
       child: Container(
@@ -70,16 +76,27 @@ class _CreateNoteDialogState extends State<CreateNoteDialog> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(widget.corners)),
                 ),
-                color: AppColors.athensGray,
+                color: widget.cardColor,
                 child: Padding(
                   padding: widget.contentPaddings,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(widget.title, style: TextStyles.headline3),
+                      Text(
+                        widget.title,
+                        style: const TextStyle(
+                          color: AppColors.brightPurple,
+                          fontFamily: FontFamily.sFProDisplay,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 20.0,
+                        ),
+                      ),
                       const SizedBox(height: 24.0),
                       TextField(
                         controller: titleController,
+                        style: const TextStyle(
+                          color: AppColors.brightPurple,
+                        ),
                         decoration: InputDecoration(
                           hintText: FirebaseLocalization.title,
                           border: OutlineInputBorder(
@@ -90,6 +107,9 @@ class _CreateNoteDialogState extends State<CreateNoteDialog> {
                       const SizedBox(height: 8.0),
                       TextField(
                         controller: descriptionController,
+                        style: const TextStyle(
+                          color: AppColors.brightPurple,
+                        ),
                         decoration: InputDecoration(
                           hintText: FirebaseLocalization.description,
                           border: OutlineInputBorder(
@@ -102,14 +122,17 @@ class _CreateNoteDialogState extends State<CreateNoteDialog> {
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: Row(
                           children: [
-                            const Text('Is important', style: TextStyles.button1),
+                            const Text(
+                              'Is important',
+                              style: TextStyle(color: AppColors.brightPurple),
+                            ),
                             const Spacer(),
                             CupertinoSwitch(
                               value: isImportant,
                               onChanged: (value) {
                                 setState(() => isImportant = value);
                               },
-                              activeColor: AppColors.froly,
+                              activeColor: AppColors.brightPurple,
                             ),
                           ],
                         ),

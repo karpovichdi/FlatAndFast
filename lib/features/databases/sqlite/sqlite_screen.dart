@@ -8,16 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:intl/intl.dart';
 import 'package:redux/src/store.dart';
-
-import '../../../common/controls/animated/buttons/floating_menu_button.dart';
 import '../../../common/controls/buttons/circular_button.dart';
-import '../../../common/controls/dialogs/image_card_dialog.dart';
-import '../../../common/controls/dialogs/information_dialog.dart';
 import '../../../common/controls/loading/loading_page.dart';
-import '../../../common/models/note.dart';
 import '../../../common/redux/app/app_state.dart';
 import '../../../common/utils/styles/app_colors.dart';
 import '../../../common/utils/styles/styles.dart';
+import '../../../common/utils/styles/themes.dart';
+import '../../../gen/fonts.gen.dart';
 
 class SQLiteScreen extends StatefulWidget {
   const SQLiteScreen({Key? key}) : super(key: key);
@@ -37,6 +34,8 @@ class _SQLiteScreenState extends State<SQLiteScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeManager? themeManager = ThemeManagerWrapper.of(context);
+
     return StoreConnector<AppState, SQLiteViewModel>(
         onInitialBuild: _initializeViewModel,
         onInit: _onInit,
@@ -46,18 +45,19 @@ class _SQLiteScreenState extends State<SQLiteScreen> {
         },
         builder: (_, viewModel) {
           return Scaffold(
-            backgroundColor: AppColors.grey.shade200,
             floatingActionButton: CircularButton(
               action: () => viewModel.addNewNote(),
-              color: AppColors.froly,
+              color: Theme.of(context).iconTheme.color ?? AppColors.froly,
               width: Dimensions.bigButtonSize,
               height: Dimensions.bigButtonSize,
-              icon: const Icon(Icons.add, color: AppColors.white),
+              icon: Icon(Icons.add, color: themeManager?.theme == ThemeMode.dark ? AppColors.brightPurple : AppColors.white),
             ),
             appBar: AppBar(
-              title: const Text(
+              title: Text(
                 'Notes',
-                style: TextStyles.appBarTitle,
+                style: TextStyle(
+                  color: Theme.of(context).iconTheme.color,
+                ),
               ),
             ),
             body: Builder(builder: (context) {
@@ -126,7 +126,11 @@ class _SQLiteScreenState extends State<SQLiteScreen> {
                                                   Flexible(
                                                     child: Text(
                                                       viewModel.notes[index].description,
-                                                      style: TextStyles.button1,
+                                                      style: const TextStyle(
+                                                          fontFamily: FontFamily.sFProDisplay,
+                                                          fontWeight: FontWeight.w400,
+                                                          fontSize: 17.0,
+                                                          color: AppColors.black),
                                                       maxLines: 1,
                                                       overflow: TextOverflow.ellipsis,
                                                     ),
@@ -159,6 +163,8 @@ class _SQLiteScreenState extends State<SQLiteScreen> {
   }
 
   void _showCreateNoteDialog(SQLiteViewModel newViewModel) {
+    ThemeManager? themeManager = ThemeManagerWrapper.of(context);
+
     showDialog<void>(
         barrierColor: AppColors.transparent,
         context: context,
@@ -166,6 +172,8 @@ class _SQLiteScreenState extends State<SQLiteScreen> {
           return CreateNoteDialog(
             title: 'Create new Note',
             message: 'Describe note',
+            cardColor: themeManager?.theme == ThemeMode.dark ? AppColors.primaryLight : AppColors.athensGray,
+            backgroundColor: themeManager?.theme == ThemeMode.dark ? AppColors.darkPurpleTransparent : AppColors.white70,
             dismissAction: () => newViewModel.closeAddNotePage(),
             saveAction: (note) => newViewModel.saveNote(note),
           );

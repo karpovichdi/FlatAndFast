@@ -1,6 +1,4 @@
-import 'dart:async';
-
-import 'package:flutter/cupertino.dart';
+import 'package:flat_and_fast/common/controls/buttons/feature_button.dart';
 import 'package:flutter/material.dart';
 
 class Carousel extends StatefulWidget {
@@ -19,9 +17,8 @@ class _CarouselState extends State<Carousel> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Material(
-        child: Container(
-          color: Colors.white38,
+      child: Scaffold(
+        body: Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -59,19 +56,19 @@ class _CarouselState extends State<Carousel> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Container(color: Colors.blueAccent, child: Center(child: Text('First tab'))),
+                        child: Container(color: Colors.blueAccent.shade100, child: Center(child: Text('First tab'))),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Container(color: Colors.blueAccent, child: Center(child: Text('Second tab'))),
+                        child: Container(color: Colors.blueAccent.shade100, child: Center(child: Text('Second tab'))),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Container(color: Colors.blueAccent, child: Center(child: Text('Third tab'))),
+                        child: Container(color: Colors.blueAccent.shade100, child: Center(child: Text('Third tab'))),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Container(color: Colors.blueAccent, child: Center(child: Text('Fourth tab'))),
+                        child: Container(color: Colors.blueAccent.shade100, child: Center(child: Text('Fourth tab'))),
                       ),
                     ]),
               ),
@@ -84,21 +81,21 @@ class _CarouselState extends State<Carousel> {
                       mainAxisAlignment: MainAxisAlignment.center,
                     ),
                     const SizedBox(height: 24.0),
-                    ElevatedButton(
-                      child: Text(
-                          _currentPage == OnboardingPageType.appFeature3.index
-                              ? 'Start'
-                              : 'Next'
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: FeatureButton(
+                        title: _currentPage == OnboardingPageType.appFeature3.index
+                            ? 'Start'
+                            : 'Next',
+                        action: () {
+                          if (_currentPage ==
+                              OnboardingPageType.appFeature3.index) {}
+                          _pageController.nextPage(
+                              duration: const Duration(milliseconds: 500),
+                              curve: Curves.ease);
+                        },
                       ),
-                      onPressed: () {
-                        if (_currentPage ==
-                            OnboardingPageType.appFeature3.index) {}
-                        _pageController.nextPage(
-                            duration: const Duration(milliseconds: 500),
-                            curve: Curves.ease);
-                      },
                     ),
-                    const SizedBox(height: 8),
                     Visibility(
                       visible:
                       _currentPage == OnboardingPageType.appFeature3.index,
