@@ -16,6 +16,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../common/controls/cards/tinder/tinder_button.dart';
+import '../../../common/utils/styles/themes.dart';
 
 class FirebaseLoginScreen extends StatefulWidget {
   const FirebaseLoginScreen({Key? key}) : super(key: key);
@@ -30,6 +31,8 @@ class _FirebaseLoginScreenState extends State<FirebaseLoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeManager? themeManager = ThemeManagerWrapper.of(context);
+
     return StoreConnector<AppState, FirebaseLoginViewModel>(
       onWillChange: _stateWillChange,
       converter: (store) {
@@ -114,12 +117,10 @@ class _FirebaseLoginScreenState extends State<FirebaseLoginScreen> {
                                       Expanded(
                                         flex: 2,
                                         child: ElevatedButton(
-                                          child: const Text(
+                                          child: Text(
                                             FirebaseLocalization.backButtonTitle,
                                             style: TextStyle(
-                                              fontSize: FirebaseDimensions.loginButtonFontSize,
-                                              fontWeight: FontWeight.normal,
-                                              color: FirebaseColors.loginButtonTextColor,
+                                              color: themeManager?.theme ==  ThemeMode.dark ? AppColors.darkPurple : FirebaseColors.loginButtonTextColor,
                                             ),
                                           ),
                                           onPressed: () => viewModel.goBack(() => NavigationHelper.goBack(context: context)),
@@ -148,12 +149,12 @@ class _FirebaseLoginScreenState extends State<FirebaseLoginScreen> {
                                       Expanded(
                                         flex: 5,
                                         child: ElevatedButton(
-                                          child: const Text(
+                                          child: Text(
                                             FirebaseLocalization.loginText,
                                             style: TextStyle(
                                               fontSize: FirebaseDimensions.loginButtonFontSize,
                                               fontWeight: FontWeight.normal,
-                                              color: FirebaseColors.loginButtonTextColor,
+                                              color: themeManager?.theme ==  ThemeMode.dark ? AppColors.darkPurple : FirebaseColors.loginButtonTextColor,
                                             ),
                                           ),
                                           onPressed: () => viewModel.login(
@@ -166,6 +167,7 @@ class _FirebaseLoginScreenState extends State<FirebaseLoginScreen> {
                                           ),
                                           style: ElevatedButton.styleFrom(
                                             onPrimary: FirebaseColors.backButtonColor,
+                                            primary: themeManager?.theme ==  ThemeMode.dark ? AppColors.primaryDark : AppColors.froly,
                                           ),
                                         ),
                                       ),

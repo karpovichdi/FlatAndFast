@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import '../../common/controls/buttons/feature_button.dart';
 import '../../common/navigation/navigation_helper.dart';
 import '../../common/utils/styles/styles.dart';
+import '../../common/utils/styles/themes.dart';
 import 'furniture/furniture_screen.dart';
 import 'login/login_screen.dart';
 
@@ -23,11 +24,15 @@ class HomeTemplatesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeManager? themeManager = ThemeManagerWrapper.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           pageTitle,
-          style: TextStyles.appBarTitle,
+          style: TextStyle(
+            color: Theme.of(context).iconTheme.color,
+          ),
         ),
       ),
       body: Center(

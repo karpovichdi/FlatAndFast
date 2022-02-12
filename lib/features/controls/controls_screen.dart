@@ -15,6 +15,7 @@ import 'package:flat_and_fast/features/controls/redux/controls_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
+import '../../common/utils/styles/themes.dart';
 import '../../di.dart';
 
 const arcTextRadius = 100.0;
@@ -23,12 +24,6 @@ const arcTextControlSize = 300.0;
 const pageTitle = 'Controls';
 const arcText = 'ArcText. Circular text should be here. Circular text should be here.';
 const linearGradientTitle = 'LinearGradient';
-
-const pageTextStyle = TextStyle(
-  fontSize: 18.0,
-  fontWeight: FontWeight.w300,
-  color: AppColors.black,
-);
 
 class ControlsScreen extends StatelessWidget {
   const ControlsScreen({Key? key}) : super(key: key);
@@ -41,12 +36,22 @@ class ControlsScreen extends StatelessWidget {
           return ControlsViewModel.fromStore(store);
         },
         builder: (_, viewModel) {
+          ThemeManager? themeManager = ThemeManagerWrapper.of(context);
+          final pageTextStyle = TextStyle(
+            fontSize: 18.0,
+            fontWeight: FontWeight.w300,
+            color: themeManager?.theme == ThemeMode.dark ? AppColors.white : AppColors.black,
+          );
+
           return Scaffold(
             appBar: AppBar(
-                title: const Text(
-              pageTitle,
-              style: TextStyles.appBarTitle,
-            )),
+              title: Text(
+                pageTitle,
+                style: TextStyle(
+                  color: Theme.of(context).iconTheme.color,
+                ),
+              ),
+            ),
             body: ListView(
               children: [
                 Container(
@@ -54,17 +59,14 @@ class ControlsScreen extends StatelessWidget {
                   decoration: BoxDecoration(border: Border.all()),
                   child: Center(
                     child: Column(
-                      children: const [
+                      children: [
                         Padding(
-                          padding: EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
+                          padding: const EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
                           child: Center(
-                            child: Text(
-                              linearGradientTitle,
-                              style: pageTextStyle,
-                            ),
+                            child: Text(linearGradientTitle, style: pageTextStyle),
                           ),
                         ),
-                        Pokeball(
+                        const Pokeball(
                           backgroundColor: AppColors.white,
                           shadowColor: AppColors.redAccent,
                           gradientColors: [
@@ -81,7 +83,7 @@ class ControlsScreen extends StatelessWidget {
                   decoration: BoxDecoration(border: Border.all()),
                   width: arcTextControlSize,
                   height: arcTextControlSize,
-                  child: const ArcText(
+                  child: ArcText(
                     radius: arcTextRadius,
                     text: arcText,
                     textStyle: pageTextStyle,

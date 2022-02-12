@@ -12,6 +12,7 @@ import '../../../../common/models/note.dart';
 import '../../../../common/redux/app/app_state.dart';
 import '../../../../common/utils/styles/app_colors.dart';
 import '../../../../common/utils/styles/styles.dart';
+import '../../../../common/utils/styles/themes.dart';
 import '../../../firebase/utils/styles/firebase_dimensions.dart';
 import '../../../firebase/utils/styles/firebase_localization.dart';
 
@@ -36,6 +37,8 @@ class _SQLiteDetailsScreenState extends State<SQLiteDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeManager? themeManager = ThemeManagerWrapper.of(context);
+
     return StoreConnector<AppState, SQLiteDetailsViewModel>(
         onInitialBuild: _initializeViewModel,
         converter: (store) {
@@ -55,16 +58,18 @@ class _SQLiteDetailsScreenState extends State<SQLiteDetailsScreen> {
                 ),
                 context,
               ),
-              color: AppColors.froly,
+              color: Theme.of(context).iconTheme.color ?? AppColors.froly,
               width: Dimensions.bigButtonSize,
               height: Dimensions.bigButtonSize,
-              icon: const Icon(Icons.save, color: AppColors.white),
+              icon: Icon(Icons.save, color: themeManager?.theme == ThemeMode.dark ? AppColors.brightPurple : AppColors.white),
             ),
             appBar: AppBar(
               centerTitle: true,
               title: Text(
                 viewModel.note?.title ?? '',
-                style: TextStyles.appBarTitle,
+                style: TextStyle(
+                  color: Theme.of(context).iconTheme.color,
+                ),
               ),
               actions: [
                 IconButton(
@@ -113,7 +118,7 @@ class _SQLiteDetailsScreenState extends State<SQLiteDetailsScreen> {
                                 onChanged: (value) {
                                   setState(() => isImportant = value);
                                 },
-                                activeColor: AppColors.froly,
+                                activeColor: themeManager?.theme == ThemeMode.dark ? AppColors.primaryLight : AppColors.brightPurple,
                               ),
                             ],
                           ),
@@ -127,7 +132,6 @@ class _SQLiteDetailsScreenState extends State<SQLiteDetailsScreen> {
                                 onTap: () => _pickDate(),
                                 child: Text(
                                   pickedDate != null ? DateFormat.yMMMd().format(pickedDate!) : '',
-                                  style: TextStyles.dialogButton,
                                 ),
                               ),
                               Padding(
@@ -136,7 +140,6 @@ class _SQLiteDetailsScreenState extends State<SQLiteDetailsScreen> {
                                   onTap: () => _pickTime(),
                                   child: Text(
                                     '${pickedTime?.format(context)}',
-                                    style: TextStyles.dialogButton,
                                   ),
                                 ),
                               ),

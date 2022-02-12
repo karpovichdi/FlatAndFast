@@ -8,16 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:intl/intl.dart';
 import 'package:redux/src/store.dart';
-
-import '../../../common/controls/animated/buttons/floating_menu_button.dart';
 import '../../../common/controls/buttons/circular_button.dart';
-import '../../../common/controls/dialogs/image_card_dialog.dart';
-import '../../../common/controls/dialogs/information_dialog.dart';
 import '../../../common/controls/loading/loading_page.dart';
-import '../../../common/models/note.dart';
 import '../../../common/redux/app/app_state.dart';
 import '../../../common/utils/styles/app_colors.dart';
 import '../../../common/utils/styles/styles.dart';
+import '../../../common/utils/styles/themes.dart';
+import '../../../gen/fonts.gen.dart';
 
 class SQLiteScreen extends StatefulWidget {
   const SQLiteScreen({Key? key}) : super(key: key);
@@ -37,6 +34,8 @@ class _SQLiteScreenState extends State<SQLiteScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeManager? themeManager = ThemeManagerWrapper.of(context);
+
     return StoreConnector<AppState, SQLiteViewModel>(
         onInitialBuild: _initializeViewModel,
         onInit: _onInit,
@@ -46,18 +45,19 @@ class _SQLiteScreenState extends State<SQLiteScreen> {
         },
         builder: (_, viewModel) {
           return Scaffold(
-            backgroundColor: AppColors.grey.shade200,
             floatingActionButton: CircularButton(
               action: () => viewModel.addNewNote(),
-              color: AppColors.froly,
+              color: Theme.of(context).iconTheme.color ?? AppColors.froly,
               width: Dimensions.bigButtonSize,
               height: Dimensions.bigButtonSize,
-              icon: const Icon(Icons.add, color: AppColors.white),
+              icon: Icon(Icons.add, color: themeManager?.theme == ThemeMode.dark ? AppColors.brightPurple : AppColors.white),
             ),
             appBar: AppBar(
-              title: const Text(
+              title: Text(
                 'Notes',
-                style: TextStyles.appBarTitle,
+                style: TextStyle(
+                  color: Theme.of(context).iconTheme.color,
+                ),
               ),
             ),
             body: Builder(builder: (context) {
@@ -67,98 +67,104 @@ class _SQLiteScreenState extends State<SQLiteScreen> {
 
               return viewModel.notes.isEmpty
                   ? const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Center(
-                  child: Text(
-                    'Notes list is empty. Are you want to create?',
-                    style: TextStyles.appBarTitle,
-                  ),
-                ),
-              )
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Center(
+                        child: Text(
+                          'Notes list is empty. Are you want to create?',
+                          style: TextStyles.appBarTitle,
+                        ),
+                      ),
+                    )
                   : Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: GridView.builder(
-                          itemCount: viewModel.notes.length,
-                          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 200,
-                            childAspectRatio: 3 / 2,
-                            crossAxisSpacing: 5,
-                            mainAxisSpacing: 0,
-                          ),
-                          itemBuilder: (BuildContext ctx, index) {
-                            return Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: GestureDetector(
-                                onTap: () => viewModel.navigateToDetails(context, viewModel.notes[index]),
-                                child: Card(
-                                  color: viewModel.notes[index].isImportant ? Colors.redAccent.shade100 : Colors.orangeAccent.shade100,
-                                  elevation: 4.0,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Flexible(
-                                              child: Text(
-                                                viewModel.notes[index].title,
-                                                style: TextStyles.medium,
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                            ),
-                                            IconButton(
-                                              onPressed: () => viewModel.deleteNote(viewModel.notes[index]),
-                                              icon: const Icon(
-                                                Icons.delete,
-                                                color: Colors.black26,
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                        const Spacer(),
-                                        Row(
-                                          children: [
-                                            Flexible(
-                                              child: Text(
-                                                viewModel.notes[index].description,
-                                                style: TextStyles.button1,
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const Spacer(),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              DateFormat.yMMMd().format(viewModel.notes[index].createdTime),
-                                              style: TextStyles.dialogButton,
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: GridView.builder(
+                                itemCount: viewModel.notes.length,
+                                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent: 200,
+                                  childAspectRatio: 3 / 2,
+                                  crossAxisSpacing: 5,
+                                  mainAxisSpacing: 0,
                                 ),
-                              ),
-                            );
-                          }),
-                    ),
-                  ],
-                ),
-              );
+                                itemBuilder: (BuildContext ctx, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: GestureDetector(
+                                      onTap: () => viewModel.navigateToDetails(context, viewModel.notes[index]),
+                                      child: Card(
+                                        color: viewModel.notes[index].isImportant ? Colors.redAccent.shade100 : Colors.orangeAccent.shade100,
+                                        elevation: 4.0,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Flexible(
+                                                    child: Text(
+                                                      viewModel.notes[index].title,
+                                                      style: TextStyles.medium,
+                                                      maxLines: 1,
+                                                      overflow: TextOverflow.ellipsis,
+                                                    ),
+                                                  ),
+                                                  IconButton(
+                                                    onPressed: () => viewModel.deleteNote(viewModel.notes[index]),
+                                                    icon: const Icon(
+                                                      Icons.delete,
+                                                      color: Colors.black26,
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                              const Spacer(),
+                                              Row(
+                                                children: [
+                                                  Flexible(
+                                                    child: Text(
+                                                      viewModel.notes[index].description,
+                                                      style: const TextStyle(
+                                                          fontFamily: FontFamily.sFProDisplay,
+                                                          fontWeight: FontWeight.w400,
+                                                          fontSize: 17.0,
+                                                          color: AppColors.black),
+                                                      maxLines: 1,
+                                                      overflow: TextOverflow.ellipsis,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              const Spacer(),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    DateFormat.yMMMd().format(viewModel.notes[index].createdTime),
+                                                    style: TextStyles.dialogButton,
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }),
+                          ),
+                        ],
+                      ),
+                    );
             }),
           );
         });
   }
 
   void _showCreateNoteDialog(SQLiteViewModel newViewModel) {
+    ThemeManager? themeManager = ThemeManagerWrapper.of(context);
+
     showDialog<void>(
         barrierColor: AppColors.transparent,
         context: context,
@@ -166,6 +172,8 @@ class _SQLiteScreenState extends State<SQLiteScreen> {
           return CreateNoteDialog(
             title: 'Create new Note',
             message: 'Describe note',
+            cardColor: themeManager?.theme == ThemeMode.dark ? AppColors.primaryLight : AppColors.athensGray,
+            backgroundColor: themeManager?.theme == ThemeMode.dark ? AppColors.darkPurpleTransparent : AppColors.white70,
             dismissAction: () {
               NavigationHelper.goBack(context: context);
               newViewModel.closeAddNotePage();
@@ -175,12 +183,13 @@ class _SQLiteScreenState extends State<SQLiteScreen> {
         });
   }
 
-  _stateWillChange(SQLiteViewModel? previousViewModel,
-      SQLiteViewModel newViewModel,) {
+  _stateWillChange(
+    SQLiteViewModel? previousViewModel,
+    SQLiteViewModel newViewModel,
+  ) {
     if (previousViewModel == null) return;
 
     var intentToCreateNote = !previousViewModel.newNotePopupVisible && newViewModel.newNotePopupVisible;
-
     if (intentToCreateNote) {
       _showCreateNoteDialog(newViewModel);
     }

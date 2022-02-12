@@ -57,10 +57,13 @@ class _TinderScreenState extends State<TinderScreen> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-            title: const Text(
-          pageTitle,
-          style: TextStyles.appBarTitle,
-        )),
+          title: Text(
+            pageTitle,
+            style: TextStyle(
+              color: Theme.of(context).iconTheme.color,
+            ),
+          ),
+        ),
         body: SafeArea(
           child: Container(
             alignment: Alignment.center,

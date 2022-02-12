@@ -18,6 +18,8 @@ import '../../../common/redux/app/app_state.dart';
 import '../../../common/utils/styles/dimensions.dart';
 import 'dart:io' show Platform;
 
+import '../../../common/utils/styles/themes.dart';
+
 const homeTitle = 'Home';
 
 class FirebaseHomeScreen extends StatefulWidget {
@@ -37,6 +39,8 @@ class _FirebaseHomeScreenState extends State<FirebaseHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeManager? themeManager = ThemeManagerWrapper.of(context);
+
     return StoreConnector<AppState, FirebaseHomeViewModel>(
         onWillChange: _stateWillChange,
         onInitialBuild: _initializeViewModel,
@@ -45,11 +49,12 @@ class _FirebaseHomeScreenState extends State<FirebaseHomeScreen> {
         },
         builder: (_, viewModel) {
           return Scaffold(
-            backgroundColor: AppColors.white,
             floatingActionButton: MenuState(
               menuCloseRequested: menuCloseRequested,
               onValueChanged: (bool value) => _setMenuCloseRequest(false),
               child: FloatingMenuButton(
+                mainColor: Theme.of(context).iconTheme.color ?? AppColors.froly,
+                mainIconColor: themeManager?.theme == ThemeMode.dark ? AppColors.brightPurple : AppColors.white,
                 firstButtonIcon: const Icon(Icons.cloud_upload, color: AppColors.white),
                 secondButtonIcon: const Icon(Icons.person, color: AppColors.white),
                 firstButtonColor: AppColors.green,
@@ -74,6 +79,9 @@ class _FirebaseHomeScreenState extends State<FirebaseHomeScreen> {
                               SliverAppBar(
                                 title: FirebaseHomeAppBar(
                                   title: homeTitle,
+                                  style: TextStyle(
+                                    color: Theme.of(context).iconTheme.color,
+                                  ),
                                   disableUpload: viewModel.selectedFile == null || viewModel.uploadTask != null,
                                   addAction: () => viewModel.selectFile(),
                                   uploadAction: () => viewModel.uploadFile(),
@@ -130,6 +138,7 @@ class _FirebaseHomeScreenState extends State<FirebaseHomeScreen> {
                                       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                                       child: Card(
                                         elevation: 4.0,
+                                        color: themeManager?.theme == ThemeMode.dark ? AppColors.primaryLight2 : AppColors.lightAppBar,
                                         child: ListTile(
                                           leading: Column(
                                             mainAxisAlignment: MainAxisAlignment.center,
@@ -142,10 +151,12 @@ class _FirebaseHomeScreenState extends State<FirebaseHomeScreen> {
                                                       imageSize: 70.0,
                                                       imageUrl: viewModel.thumbnails?[index].url ?? '',
                                                       isBusy: false,
-                                                      loadingWidget: const SizedBox(
+                                                      loadingWidget: SizedBox(
                                                         height: 40.0,
                                                         width: 40.0,
-                                                        child: LoadingPage(),
+                                                        child: LoadingPage(
+                                                            color:
+                                                                themeManager?.theme == ThemeMode.dark ? AppColors.darkPurple : AppColors.darkPurple),
                                                       ),
                                                     ),
                                                   ),
@@ -160,30 +171,32 @@ class _FirebaseHomeScreenState extends State<FirebaseHomeScreen> {
                                               children: [
                                                 Flexible(
                                                   fit: FlexFit.tight,
-                                                  child: Text('${viewModel.thumbnails?[index].name}', overflow: TextOverflow.ellipsis),
+                                                  child: Text('${viewModel.thumbnails?[index].name}',
+                                                      style: TextStyle(
+                                                          color: themeManager?.theme == ThemeMode.dark ? AppColors.darkPurple : AppColors.black),
+                                                      overflow: TextOverflow.ellipsis),
                                                 ),
                                                 Padding(
                                                   padding: const EdgeInsets.only(right: 8.0),
                                                   child: Builder(builder: (context) {
                                                     if (viewModel.downloadingFiles.contains(viewModel.thumbnails?[index])) {
-                                                      return const LoadingPage();
+                                                      return LoadingPage(
+                                                          color: themeManager?.theme == ThemeMode.dark ? AppColors.darkPurple : AppColors.darkPurple);
                                                     } else if (viewModel.downloadedFiles.contains(viewModel.thumbnails?[index])) {
                                                       return Row(
                                                         children: [
                                                           IconButton(
                                                             alignment: Alignment.centerRight,
                                                             onPressed: () => viewModel.openImage(viewModel.thumbnails?[index]),
-                                                            icon: Icon(
+                                                            icon: const Icon(
                                                               Icons.image,
-                                                              color: Colors.blueAccent.shade100,
                                                             ),
                                                           ),
                                                           IconButton(
                                                             alignment: Alignment.centerRight,
                                                             onPressed: () => viewModel.shareImage(viewModel.thumbnails?[index]),
-                                                            icon: Icon(
+                                                            icon: const Icon(
                                                               Icons.share,
-                                                              color: Colors.blueAccent.shade100,
                                                             ),
                                                           ),
                                                         ],
@@ -192,10 +205,9 @@ class _FirebaseHomeScreenState extends State<FirebaseHomeScreen> {
                                                     return IconButton(
                                                       alignment: Alignment.centerRight,
                                                       onPressed: () => viewModel.downloadFile(viewModel.thumbnails?[index]),
-                                                      icon: Icon(
+                                                      icon: const Icon(
                                                         Icons.download_sharp,
-                                                        size:25.0,
-                                                        color: Colors.blueAccent.shade100,
+                                                        size: 25.0,
                                                       ),
                                                     );
                                                   }),

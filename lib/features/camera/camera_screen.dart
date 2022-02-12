@@ -42,9 +42,11 @@ class _CameraScreenState extends State<CameraScreen> {
         builder: (_, viewModel) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text(
+              title: Text(
                 pageTitle,
-                style: TextStyles.appBarTitle,
+                style: TextStyle(
+                  color: Theme.of(context).iconTheme.color,
+                ),
               ),
             ),
             body: ListView(
@@ -61,10 +63,7 @@ class _CameraScreenState extends State<CameraScreen> {
                                 path: viewModel.imagePath,
                                 imageSize: imageSize,
                                 isBusy: viewModel.isLoading,
-                                loadingWidget: const SizedBox(
-                                    width: imageSize,
-                                    height: imageSize,
-                                    child: LoadingPage()),
+                                loadingWidget: const SizedBox(width: imageSize, height: imageSize, child: LoadingPage()),
                               ),
                             ),
                           ),

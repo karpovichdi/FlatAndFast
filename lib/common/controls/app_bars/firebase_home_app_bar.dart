@@ -8,6 +8,7 @@ class FirebaseHomeAppBar extends StatelessWidget with PreferredSizeWidget {
     required this.addAction,
     required this.uploadAction,
     required this.changeApi,
+    required this.style,
     required this.disableUpload,
     required this.realApi,
   }) : super(key: key);
@@ -15,6 +16,7 @@ class FirebaseHomeAppBar extends StatelessWidget with PreferredSizeWidget {
   final String title;
   final bool disableUpload;
   final bool realApi;
+  final TextStyle style;
   final Function() addAction;
   final Function() uploadAction;
   final Function() changeApi;
@@ -25,7 +27,7 @@ class FirebaseHomeAppBar extends StatelessWidget with PreferredSizeWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title, style: TextStyles.appBarTitle),
+          Text(title, style: style),
           const Spacer(),
           IconButton(
             icon: Icon(realApi ? Icons.account_tree : Icons.account_tree_outlined),

@@ -15,9 +15,11 @@ class DatabasesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           pageTitle,
-          style: TextStyles.appBarTitle,
+          style: TextStyle(
+            color: Theme.of(context).iconTheme.color,
+          ),
         ),
       ),
       body: Center(

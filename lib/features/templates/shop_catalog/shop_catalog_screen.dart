@@ -1,6 +1,8 @@
+import 'package:flat_and_fast/common/utils/styles/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../common/utils/styles/themes.dart';
 import 'burger_view.dart';
 
 class ShopCatalogScreen extends StatefulWidget {
@@ -24,6 +26,8 @@ class _ShopCatalogScreenState extends State<ShopCatalogScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeManager? themeManager = ThemeManagerWrapper.of(context);
+
     return Scaffold(
       body: CustomScrollView(
         shrinkWrap: false,
@@ -34,10 +38,10 @@ class _ShopCatalogScreenState extends State<ShopCatalogScreen> {
             snap: false,
             expandedHeight: 225.0,
             flexibleSpace: FlexibleSpaceBar(
-              title: const Text(
-                'Menu',
+              title: Text(
+                'Title',
                 style: TextStyle(
-                  color: Colors.grey,
+                  color: themeManager?.theme == ThemeMode.dark ? AppColors.primaryDark : AppColors.darkPurple,
                   fontFamily: 'Montserrat',
                   fontWeight: FontWeight.bold,
                 ),
@@ -67,7 +71,6 @@ class _ShopCatalogScreenState extends State<ShopCatalogScreen> {
                       const Text(
                         'The Cinnamon Snail',
                         style: TextStyle(
-                          color: Colors.black,
                           fontSize: 27.0,
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.bold,
@@ -75,8 +78,8 @@ class _ShopCatalogScreenState extends State<ShopCatalogScreen> {
                       ),
                       const SizedBox(height: 10.0),
                       Row(
-                        children: <Widget>[
-                          const Text(
+                        children: const <Widget>[
+                          Text(
                             '17th st & Union Sq East',
                             style: TextStyle(
                               color: Colors.grey,
@@ -84,13 +87,12 @@ class _ShopCatalogScreenState extends State<ShopCatalogScreen> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(width: 5.0),
-                          const Icon(Icons.location_on),
-                          const SizedBox(width: 5.0),
+                          SizedBox(width: 5.0),
+                          Icon(Icons.location_on),
+                          SizedBox(width: 5.0),
                           Text(
                             '400ft Away',
                             style: TextStyle(
-                              color: Colors.black.withOpacity(0.5),
                               fontWeight: FontWeight.bold,
                             ),
                           )

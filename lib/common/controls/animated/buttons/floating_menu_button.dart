@@ -16,6 +16,8 @@ class FloatingMenuButton extends StatefulWidget {
     required this.secondButtonAction,
     required this.secondButtonIcon,
     required this.secondButtonColor,
+    required this.mainColor,
+    required this.mainIconColor,
   }) : super(key: key);
 
   final Function firstButtonAction;
@@ -24,6 +26,8 @@ class FloatingMenuButton extends StatefulWidget {
   final Function secondButtonAction;
   final Icon secondButtonIcon;
   final Color secondButtonColor;
+  final Color mainColor;
+  final Color mainIconColor;
 
   @override
   _FloatingMenuButtonState createState() => _FloatingMenuButtonState();
@@ -135,10 +139,10 @@ class _FloatingMenuButtonState extends State<FloatingMenuButton> with SingleTick
             action: () {
               _animateButtonMenuClick(animationController);
             },
-            color: AppColors.froly,
+            color: widget.mainColor,
             width: bigButtonSize,
             height: bigButtonSize,
-            icon: const Icon(Icons.menu, color: AppColors.white),
+            icon: Icon(Icons.menu, color: widget.mainIconColor),
           ),
         ),
       ],
