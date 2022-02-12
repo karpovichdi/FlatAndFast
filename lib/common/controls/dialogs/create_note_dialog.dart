@@ -45,19 +45,29 @@ class CreateNoteDialog extends StatefulWidget {
 class _CreateNoteDialogState extends State<CreateNoteDialog> {
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
+
   bool isImportant = false;
+  bool isDismissed = false;
 
   @override
   void dispose() {
     titleController.dispose();
     descriptionController.dispose();
+
+    if (!isDismissed) {
+      widget.dismissAction();
+    }
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => widget.dismissAction(),
+      onTap: () {
+        widget.dismissAction();
+        isDismissed = true;
+      },
       child: Container(
         color: widget.backgroundColor,
         child: Center(
