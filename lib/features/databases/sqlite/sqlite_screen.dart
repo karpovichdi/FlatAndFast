@@ -127,10 +127,7 @@ class _SQLiteScreenState extends State<SQLiteScreen> {
                                                     child: Text(
                                                       viewModel.notes[index].description,
                                                       style: const TextStyle(
-                                                          fontFamily: FontFamily.sFProDisplay,
-                                                          fontWeight: FontWeight.w400,
-                                                          fontSize: 17.0,
-                                                          color: AppColors.black),
+                                                          fontFamily: FontFamily.sFProDisplay, fontSize: 13.0, color: AppColors.black),
                                                       maxLines: 1,
                                                       overflow: TextOverflow.ellipsis,
                                                     ),
@@ -142,7 +139,8 @@ class _SQLiteScreenState extends State<SQLiteScreen> {
                                                 children: [
                                                   Text(
                                                     DateFormat.yMMMd().format(viewModel.notes[index].createdTime),
-                                                    style: TextStyles.dialogButton,
+                                                    style:
+                                                        const TextStyle(fontFamily: FontFamily.sFProDisplay, fontSize: 13.0, color: AppColors.black),
                                                   ),
                                                 ],
                                               ),
@@ -178,7 +176,9 @@ class _SQLiteScreenState extends State<SQLiteScreen> {
               NavigationHelper.goBack(context: context);
               newViewModel.closeAddNotePage();
             },
-            saveAction: (note) => newViewModel.saveNote(note),
+            saveAction: (note) {
+              return newViewModel.saveNote(note);
+            },
           );
         });
   }

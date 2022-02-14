@@ -149,15 +149,20 @@ class _CreateNoteDialogState extends State<CreateNoteDialog> {
                       ),
                       const Spacer(),
                       FeatureButton(
-                        action: () => widget.saveAction(
-                          Note(
-                            isImportant: isImportant,
-                            title: titleController.text,
-                            description: descriptionController.text,
-                            createdTime: DateTime.now(),
-                            number: 0,
-                          ),
-                        ),
+                        action: () {
+                          widget.dismissAction();
+                          isDismissed = true;
+
+                          return widget.saveAction(
+                            Note(
+                              isImportant: isImportant,
+                              title: titleController.text,
+                              description: descriptionController.text,
+                              createdTime: DateTime.now(),
+                              number: 0,
+                            ),
+                          );
+                        },
                         title: 'Save',
                       ),
                     ],
